@@ -1,2 +1,3 @@
 # WipperSnapper_Display
-Test project for adding display functionality to WipperSnapper
+
+A project for adding display functionality to WipperSnapper firmware.
