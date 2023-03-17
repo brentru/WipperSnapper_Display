@@ -6,45 +6,27 @@
 // Prior Adafruit_LvGL_Glue users: see hello_changes example for updates!
 
 #include <Adafruit_LvGL_Glue.h> // Always include this BEFORE lvgl.h!
-#include <lvgl.h>
 #include <Adafruit_ST7789.h>
+#include <lvgl.h>
 
-//extern lv_font_t turtle;
-extern lv_font_t turtle2;
-#define TURTLE_SYMBOL "\xEF\x9C\xA6"
+// FA symbol glyphs
+#define SYMBOL_CODE "\xEF\x87\x89"
+#define SYMBOL_WIFI "\xEF\x87\xAB"
+#define SYMBOL_TURTLE30PX "\xEF\x9C\xA6"
+#define SYMBOL_CLOUD "\xEF\x83\x82"
+#define SYMBOL_CHECKMARK "\xEF\x81\x98"
+#define SYMBOL_ERROR_TRIANGLE "\xEF\x81\xB1"
 
-#define BIRD_SYMBOL "\xEE\x91\xA9"
+// images
+LV_IMG_DECLARE(ws_icon_100px);
+LV_IMG_DECLARE(ws_logo_200px);
 
-Adafruit_ST7789    tft(TFT_CS, TFT_DC, TFT_RESET);
+// FA symbol properties
+extern lv_font_t errorTriangle, circle_30px, cloud_30px, turtle_30px, wifi_30px,
+    file_code;
+
+Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RESET);
 Adafruit_LvGL_Glue glue;
-
-// This example sketch's LittlevGL UI-building calls are all in this
-// function rather than in setup(), so simple programs can just
-// copy-and-paste this sketch as a starting point, then embellish here:
-void lvgl_setup(void) {
- // make background black
- lv_obj_set_style_bg_color(lv_scr_act(), LV_COLOR_MAKE(0, 0, 0), LV_STATE_DEFAULT);
-
-  // turtle font label
- lv_obj_t *label = lv_label_create(lv_scr_act());
-  static lv_style_t style;
-  lv_style_init(&style);
-  lv_style_set_text_font(&style, &turtle2);
-  lv_style_set_text_color(&style, lv_color_white());
-  lv_obj_add_style(label, &style, LV_PART_MAIN);
-  // set turtle font label
-  lv_label_set_text(label, TURTLE_SYMBOL);
-  lv_obj_align(label, LV_ALIGN_TOP_LEFT, 0, 0);  
-
-  // project label
-  lv_obj_t *labelWS = lv_label_create(lv_scr_act());
-  static lv_style_t styleText;
-  lv_style_init(&styleText);
-  lv_style_set_text_color(&styleText, lv_color_white());
-  lv_obj_add_style(labelWS, &styleText, LV_PART_MAIN);
-  lv_label_set_text(labelWS, "WipperSnapper");
-  lv_obj_align(labelWS, LV_ALIGN_TOP_MID, 0, 0);
-}
 
 void setup(void) {
   Serial.begin(115200);
@@ -56,12 +38,13 @@ void setup(void) {
 
   // Initialize glue, passing in address of display
   LvGLStatus status = glue.begin(&tft);
-  if(status != LVGL_OK) {
+  if (status != LVGL_OK) {
     Serial.printf("Glue error %d\r\n", (int)status);
-    for(;;);
+    for (;;)
+      ;
   }
 
-  lvgl_setup(); // Call UI-building function above
+  // lvgl_setup(); // Call UI-building function above
 }
 
 void loop(void) {
