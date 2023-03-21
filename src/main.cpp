@@ -31,30 +31,35 @@ Adafruit_LvGL_Glue glue;
 // Styles used by the loading screen, need to be global or static
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px, styleIconCloud, styleIconCheckmark;
 
-void createSplashScreen(lv_obj_t *scr) {
-  lv_obj_set_style_bg_color(scr, lv_color_black(), LV_STATE_DEFAULT);
 
-  // create and center the full logo (200px)
-  lv_obj_t *icon = lv_img_create(scr);
-  lv_img_set_src(icon, &ws_logo_200px);
-  lv_obj_align(icon, LV_ALIGN_CENTER, 0, 0);
+void my_log_cb(const char * buf)
+{
+  Serial.printf(buf);
 }
 
-void buildScreenLoad(lv_obj_t *scr) {
 
-  lv_obj_set_style_bg_color(scr, lv_color_black(), LV_STATE_DEFAULT);
-
-  lv_obj_t *icon = lv_img_create(scr);
-  lv_img_set_src(icon, &ws_icon_100px);
-  lv_obj_align(icon, LV_ALIGN_TOP_MID, 0, 5);
+lv_timer_t* splashTask;
+lv_obj_t *splashImg;
 
   // Icon bar offset and spacing
   const lv_coord_t iconBarXStart = 28;
   const lv_coord_t iconBarYOffset = -45; // gives us room for text, too
   const int iconBarXSpaces = 33;         // +10 exactly between icons
 
+void load_task(lv_timer_t * timer) {
+  Serial.printf("load_task()");
+  // clear out the splash screen
+  Serial.printf("load_task(): clearing splash screen");
+  lv_obj_add_flag(splashImg, LV_OBJ_FLAG_HIDDEN);
+
+  Serial.printf("load_task(): building load screen");
+  // adding loading screen image
+  lv_obj_t *icon = lv_img_create(lv_scr_act());
+  lv_img_set_src(icon, &ws_icon_100px);
+  lv_obj_align(icon, LV_ALIGN_TOP_MID, 0, 5);
+
   // add symbol_code (30px) to represent settings.json
-  lv_obj_t *labelIconFile = lv_label_create(scr);
+  lv_obj_t *labelIconFile = lv_label_create(lv_scr_act());
   lv_label_set_text(labelIconFile, SYMBOL_CODE);
   // formatting
   lv_style_init(&styleIconFile);
@@ -63,61 +68,27 @@ void buildScreenLoad(lv_obj_t *scr) {
   lv_obj_add_style(labelIconFile, &styleIconFile, LV_PART_MAIN);
   lv_obj_align(labelIconFile, LV_ALIGN_BOTTOM_LEFT, iconBarXStart,
                iconBarYOffset);
-
-  // add symbol_wifi (30px) to represent wifi connect
-  lv_obj_t *labelWiFi = lv_label_create(scr);
-  lv_label_set_text(labelWiFi, SYMBOL_WIFI);
-  lv_style_init(&styleIconWiFi);
-  lv_style_set_text_color(&styleIconWiFi, lv_palette_main(LV_PALETTE_GREY));
-  lv_style_set_text_font(&styleIconWiFi, &wifi_30px);
-  lv_obj_add_style(labelWiFi, &styleIconWiFi, LV_PART_MAIN);
-  lv_obj_align(labelWiFi, LV_ALIGN_BOTTOM_LEFT,
-               iconBarXStart + (iconBarXSpaces * 1), iconBarYOffset);
-
-  // Add symbol turtle 30px
-  lv_obj_t *labelTurtleBar = lv_label_create(scr);
-  lv_label_set_text(labelTurtleBar, SYMBOL_TURTLE30PX);
-
-  lv_style_init(&styleIconTurtle30px);
-  lv_style_set_text_color(&styleIconTurtle30px,
-                          lv_palette_main(LV_PALETTE_GREY));
-  lv_style_set_text_font(&styleIconTurtle30px, &turtle_30px);
-  lv_obj_add_style(labelTurtleBar, &styleIconTurtle30px,
-                   LV_PART_MAIN); // 28+(33*2) = 94
-  lv_obj_align(labelTurtleBar, LV_ALIGN_BOTTOM_LEFT, 106, iconBarYOffset);
-
-  // Add cloud
-  lv_obj_t *labelCloudBar = lv_label_create(scr);
-  lv_label_set_text(labelCloudBar, SYMBOL_CLOUD);
-
-  lv_style_init(&styleIconCloud);
-  lv_style_set_text_color(&styleIconCloud, lv_palette_main(LV_PALETTE_GREY));
-  lv_style_set_text_font(&styleIconCloud, &cloud_30px);
-  lv_obj_add_style(labelCloudBar, &styleIconCloud, LV_PART_MAIN);
-  lv_obj_align(labelCloudBar, LV_ALIGN_BOTTOM_LEFT, iconBarXStart + (106 + 13),
-               iconBarYOffset);
-
-  // Add circle checkmark
-  lv_obj_t *labelCircleBar = lv_label_create(scr);
-  lv_label_set_text(labelCircleBar, SYMBOL_CHECKMARK);
-
-  lv_style_init(&styleIconCheckmark);
-  lv_style_set_text_color(&styleIconCheckmark,
-                          lv_palette_main(LV_PALETTE_GREY));
-  lv_style_set_text_font(&styleIconCheckmark, &circle_30px);
-  lv_obj_add_style(labelCircleBar, &styleIconCheckmark, LV_PART_MAIN);
-  lv_obj_align(labelCircleBar, LV_ALIGN_BOTTOM_LEFT, 160 + 33, iconBarYOffset);
 }
 
-void my_log_cb(const char * buf)
-{
-  Serial.printf(buf);
+void splash_task(lv_timer_t * timer) {
+  Serial.printf("splash_task()");
+  // create and load splash screen 
+  
+  // create and center the full logo (200px
+  splashImg = lv_img_create(lv_scr_act());
+  lv_img_set_src(splashImg, &ws_logo_200px);
+  lv_obj_align(splashImg, LV_ALIGN_CENTER, 0, 0);
+
+  lv_timer_del(timer); // one-shot task, delete
+
+  // add load_task to timer handler
+  lv_timer_create(load_task, 5000, NULL);
 }
 
 
 void setup(void) {
   Serial.begin(115200);
-  // while (!Serial) delay(10);
+  //while (!Serial) delay(10);
 
   // Initialize display BEFORE glue setup
   tft.init(240, 240);
@@ -134,25 +105,11 @@ void setup(void) {
 
   lv_log_register_print_cb(my_log_cb);
 
-  // create and load splash screen 
-  Serial.println("Creating SCR1");
-  lv_obj_t *scr_1 = lv_obj_create(NULL);
-  createSplashScreen(scr_1);
-  Serial.println("Loading SCR1");
-  lv_scr_load(scr_1);
-  Serial.println("Loaded SCR1");
+  lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
+  // task 1
+  Serial.printf("Setup");
+  splashTask = lv_timer_create(splash_task, 0, NULL);
 
-
-/*   lv_obj_t *prev_scr = lv_scr_act(); 
-
-  // Build loading screen
-  lv_obj_t *scr_2 = lv_obj_create(NULL);
-  buildScreenLoad(scr_2);
-  lv_scr_load(scr_2);
-  Serial.println("Loaded SCR2");
-  lv_obj_del(prev_scr);
-  Serial.println("Deleted SCR1"); */
-  
 
 }
 
