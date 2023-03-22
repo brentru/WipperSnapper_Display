@@ -58,12 +58,8 @@ void make_file_green(lv_timer_t *timer) {
 }
 
 /* Dynamically builds and shows the loading screen */
-void timer_build_loader_cb(lv_timer_t *timer) {
-  Serial.printf("timer_build_loader_cb()");
-  // clear out the splash screen
-  Serial.printf("timer_build_loader_cb(): clearing splash screen");
-  // remove the splash screen (TODO: do this in another func.)
-  lv_obj_del(splashImg);
+void build_load_screen() {
+  Serial.printf("build_load_screen()");
 
   Serial.printf("timer_build_loader_cb(): building load screen");
   // adding loading screen image
@@ -131,28 +127,14 @@ void timer_build_loader_cb(lv_timer_t *timer) {
   lv_obj_add_style(labelCircleBar, &styleIconCheckmark, LV_PART_MAIN);
   lv_obj_align(labelCircleBar, LV_ALIGN_BOTTOM_LEFT, 160 + 33, iconBarYOffset);
 
-  Serial.printf("timer_build_loader_cb(): built load screen!");
+  Serial.printf("build_load_screen(): built load screen!");
 
-  // delete this timer to prevent a repeat run
-  lv_timer_del(timer);
-
-  // TODO: Next task should check for secrets.json instead
-  lv_timer_create(make_file_green, 3000, NULL);
 }
 
-void timer_splash_cb(lv_timer_t *timer) {
-  Serial.printf("timer_splash_cb()");
-  // build and show the splash screen
-  splashImg = lv_img_create(lv_scr_act());
-  lv_img_set_src(splashImg, &ws_logo_200px);
-  lv_obj_align(splashImg, LV_ALIGN_CENTER, 0, 0);
-
-  // delete this timer to prevent a repeat run
-  lv_timer_del(timer);
-
-  // next, loading bar executes after 2.5sec spent within the current timer
-  lv_timer_create(timer_build_loader_cb, 2500, NULL);
+void provision() {
+    Serial.println("provision...");
 }
+
 
 void setup(void) {
   Serial.begin(115200);
@@ -176,8 +158,11 @@ void setup(void) {
   // set screen background to black
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
 
-  // task 1 - splash screen launches immediately
-  lv_timer_create(timer_splash_cb, 0, NULL);
+  // build the load screen first
+  build_load_screen(); 
+  provision();
+
+  Serial.println("going into loop()");
 }
 
 void loop(void) {
