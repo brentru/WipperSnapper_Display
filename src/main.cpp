@@ -1,13 +1,12 @@
 #include <Arduino.h>
-// Minimal "Hello" example for LittlevGL on Adafruit Funhouse. Requires
-// LittlevGL, Adafruit_LvGL_Glue, Adafruit_GFX and Adafruit_ST7735
-// libraries.
 
-// Prior Adafruit_LvGL_Glue users: see hello_changes example for updates!
 
 #include <Adafruit_LvGL_Glue.h> // Always include this BEFORE lvgl.h!
 #include <Adafruit_ST7789.h>
 #include <lvgl.h>
+
+
+#include "tinyusb/Wippersnapper_FS.h" // adafruit_wippersnapper
 
 // adafruit_lvgl_glue
 Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RESET);
@@ -133,6 +132,8 @@ void build_load_screen() {
 
 void provision() {
     Serial.println("provision...");
+    Wippersnapper_FS *fileSystem = new Wippersnapper_FS();
+
 }
 
 
