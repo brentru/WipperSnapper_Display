@@ -21,14 +21,16 @@ ws_drv_display::ws_drv_display() {
   // TODO
 }
 
-ws_drv_display::ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET) {
+ws_drv_display::ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC,
+                               uint8_t TFT_RESET) {
   // TODO: We'll probably need to detect tft display types, not just ST7789
   _tft_st7789 = new Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RESET);
 }
 
 ws_drv_display::~ws_drv_display() { delete _tft_st7789; }
 
-void ws_drv_display::setResolution(uint16_t displayWidth, uint16_t displayHeight) {
+void ws_drv_display::setResolution(uint16_t displayWidth,
+                                   uint16_t displayHeight) {
   _displayWidth = displayWidth;
   _displayHeight = displayHeight;
 }
