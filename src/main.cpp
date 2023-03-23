@@ -1,16 +1,7 @@
-#include <Arduino.h>
-
-
-#include <Adafruit_LvGL_Glue.h> // Always include this BEFORE lvgl.h!
-#include <Adafruit_ST7789.h>
-#include <lvgl.h>
-
-
+#include "display/ws_display.h"
 #include "tinyusb/Wippersnapper_FS.h" // adafruit_wippersnapper
 
-// adafruit_lvgl_glue
-Adafruit_ST7789 tft(TFT_CS, TFT_DC, TFT_RESET);
-Adafruit_LvGL_Glue glue;
+ws_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
 
 // lvgl
 // FA symbol glyphs
@@ -39,22 +30,7 @@ static lv_obj_t *lblIconFile, *lblIconWiFi;
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
 
-/* Logger for USB serial */
-void my_log_cb(const char *buf) { Serial.printf(buf); }
 
-void make_wifi_green(lv_timer_t *timer) {
-  lv_style_set_text_color(&styleIconWiFi, lv_palette_main(LV_PALETTE_GREEN));
-  lv_obj_add_style(lblIconWiFi, &styleIconWiFi, LV_PART_MAIN);
-  lv_timer_del(timer);
-}
-
-void make_file_green(lv_timer_t *timer) {
-  Serial.printf("make_file_green()");
-  lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
-  lv_obj_add_style(lblIconFile, &styleIconFile, LV_PART_MAIN);
-
-  lv_timer_del(timer);
-}
 
 /* Dynamically builds and shows the loading screen */
 void build_load_screen() {
@@ -132,8 +108,10 @@ void build_load_screen() {
 
 void provision() {
     Serial.println("provision...");
+    // create FS
     Wippersnapper_FS *fileSystem = new Wippersnapper_FS();
-
+    // parse out the secrets file
+//    fileSystem->parseSecrets();
 }
 
 
@@ -141,20 +119,9 @@ void setup(void) {
   Serial.begin(115200);
   // while (!Serial) delay(10);
 
-  // Initialize display BEFORE glue setup
-  tft.init(240, 240);
-  pinMode(TFT_BACKLIGHT, OUTPUT);
-  digitalWrite(TFT_BACKLIGHT, HIGH);
-
-  // Initialize glue, passing in address of display
-  LvGLStatus status = glue.begin(&tft);
-  if (status != LVGL_OK) {
-    Serial.printf("Glue error %d\r\n", (int)status);
-    for (;;)
-      ;
-  }
-
-  lv_log_register_print_cb(my_log_cb);
+  tft_st7789.setResolution(240, 240);
+  tft_st7789.enableLogging();
+  tft_st7789.begin();
 
   // set screen background to black
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);

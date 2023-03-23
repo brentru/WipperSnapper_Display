@@ -332,6 +332,7 @@ void Wippersnapper_FS::parseSecrets() {
   // open file for parsing
   File32 secretsFile = wipperFatFs.open("/secrets.json");
   if (!secretsFile) {
+    // TODO: Handle error here!
     Serial.println("ERROR: Could not open secrets.json file for reading!");
     fsHalt();
   }
