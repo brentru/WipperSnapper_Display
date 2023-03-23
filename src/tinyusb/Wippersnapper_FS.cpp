@@ -102,7 +102,6 @@ Wippersnapper_FS::Wippersnapper_FS() {
   // If a filesystem does not already exist - attempt to initialize a new
   // filesystem
 
-
   if (!initFilesystem()) {
     Serial.println("ERROR Initializing Filesystem");
     // setStatusLEDColor(RED);

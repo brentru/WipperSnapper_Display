@@ -1,7 +1,10 @@
-#ifndef WIPPERSNAPPER_DISPLAY_2_H
-#define WIPPERSNAPPER_DISPLAY_2_H
+#ifndef WS_DISPLAY_UI_HELPER_H
+#define WS_DISPLAY_UI_HELPER_H
 
 #include "ws_drv_display.h"
+
+// TODO: Push all the symbols elsewhere!
+
 // lvgl
 // FA symbol glyphs
 #define SYMBOL_CODE "\xEF\x87\x89"
@@ -17,10 +20,6 @@ extern lv_font_t errorTriangle, circle_30px, cloud_30px, turtle_30px, wifi_30px,
 
 // images
 LV_IMG_DECLARE(ws_icon_100px);
-LV_IMG_DECLARE(ws_logo_200px);
-
-// splash screen image
-static lv_obj_t *splashImg;
 
 // loading bar icons
 static lv_obj_t *lblIconFile, *lblIconWiFi;
@@ -29,8 +28,58 @@ static lv_obj_t *lblIconFile, *lblIconWiFi;
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
 
+/* Sets the lvgl default background to black */
 void set_bg_black() {
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
+}
+
+// TODO: Can we make this type of thing reusable whenever we need to set up an error?
+void buildScreenError(char *errorHeader, char *errorInstructions) {
+
+  // Add circle checkmark
+  lv_obj_t *labelErrorTriangle = lv_label_create(lv_scr_act());
+  lv_label_set_text(labelErrorTriangle, SYMBOL_ERROR_TRIANGLE);
+
+  static lv_style_t styleErrorTriangle;
+  lv_style_init(&styleErrorTriangle);
+  lv_style_set_text_color(&styleErrorTriangle, lv_color_white());
+  lv_style_set_text_font(&styleErrorTriangle, &errorTriangle); 
+  lv_obj_add_style(labelErrorTriangle, &styleErrorTriangle, LV_PART_MAIN);
+  lv_obj_align(labelErrorTriangle, LV_ALIGN_TOP_MID, 0, 30);
+
+
+  // Label (error heading)
+  lv_obj_t *labelErrorHeader = lv_label_create(lv_scr_act());
+  lv_label_set_text(labelErrorHeader, errorHeader);
+
+  static lv_style_t styleTextBig;
+  lv_style_init(&styleTextBig);
+  lv_style_set_text_color(&styleTextBig, lv_color_white());
+  lv_style_set_text_font(&styleTextBig, &lv_font_montserrat_16); 
+  lv_obj_add_style(labelErrorHeader, &styleTextBig, LV_PART_MAIN);
+  lv_obj_align(labelErrorHeader, LV_ALIGN_CENTER, 0, 10);
+
+
+  // Label (error text box)
+  lv_obj_t *labelErrorBody = lv_label_create(lv_scr_act());
+  lv_label_set_long_mode(labelErrorBody, LV_LABEL_LONG_WRAP);
+  lv_label_set_text(labelErrorBody, errorInstructions);
+
+  static lv_style_t styleErrorText;
+  lv_style_init(&styleErrorText);
+  lv_style_set_text_color(&styleErrorText, lv_color_white());
+  lv_style_set_text_font(&styleErrorText, &lv_font_montserrat_12); 
+  lv_obj_add_style(labelErrorBody, &styleErrorText, LV_PART_MAIN);
+  // small width to allow LABEL_LONG_WRAP
+  lv_obj_set_width(labelErrorBody, 220);
+  lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, 0, 65);
+}
+
+void delete_load_screen() {
+    lv_obj_del(lblIconFile);
+    lv_obj_del(lblIconWiFi);
+    // TODO: More! 
+    //lv_obj_del(labelTurtleBar);
 }
 
 /* Dynamically builds and shows the loading screen */
@@ -101,4 +150,4 @@ void build_load_screen() {
   lv_obj_align(labelCircleBar, LV_ALIGN_BOTTOM_LEFT, 160 + 33, iconBarYOffset);
 }
 
-#endif // WIPPERSNAPPER_DISPLAY_2_H
+#endif // WS_DISPLAY_UI_HELPER_H
