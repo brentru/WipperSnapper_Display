@@ -1,5 +1,5 @@
 /*!
- * @file ws_display.cpp
+ * @file ws_drv_display.cpp
  *
  * Wippersnapper LVGL Display Driver
  *
@@ -12,30 +12,30 @@
  * BSD license, all text here must be included in any redistribution.
  *
  */
-#include "ws_display.h"
+#include "ws_drv_display.h"
 
 /* Logger for USB serial */
 void my_log_cb(const char *buf) { Serial.printf(buf); }
 
-ws_display::ws_display() {
+ws_drv_display::ws_drv_display() {
   // TODO
 }
 
-ws_display::ws_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET) {
+ws_drv_display::ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET) {
   // TODO: We'll probably need to detect tft display types, not just ST7789
   _tft_st7789 = new Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RESET);
 }
 
-ws_display::~ws_display() { delete _tft_st7789; }
+ws_drv_display::~ws_drv_display() { delete _tft_st7789; }
 
-void ws_display::setResolution(uint16_t displayWidth, uint16_t displayHeight) {
+void ws_drv_display::setResolution(uint16_t displayWidth, uint16_t displayHeight) {
   _displayWidth = displayWidth;
   _displayHeight = displayHeight;
 }
 
-void ws_display::enableLogging() { lv_log_register_print_cb(my_log_cb); }
+void ws_drv_display::enableLogging() { lv_log_register_print_cb(my_log_cb); }
 
-void ws_display::begin() {
+void ws_drv_display::begin() {
   _tft_st7789->init(_displayWidth, _displayHeight);
 
   // funhouse-specific initialization

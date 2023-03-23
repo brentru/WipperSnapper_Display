@@ -1,5 +1,5 @@
 /*!
- * @file ws_display.h
+ * @file ws_drv_display.h
  *
  * Wippersnapper display
  *
@@ -25,11 +25,11 @@
     @brief  Display driver for LVGL and LVGL_Glue in WipperSnapper.
 */
 /***************************************************************************/
-class ws_display {
+class ws_drv_display {
 public:
-  ws_display();
-  ws_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET);
-  ~ws_display();
+  ws_drv_display();
+  ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET);
+  ~ws_drv_display();
 
   void begin();
   void setResolution(uint16_t displayWidth, uint16_t displayHeight);

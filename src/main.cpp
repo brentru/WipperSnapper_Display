@@ -1,7 +1,7 @@
-#include "display/ws_display.h"
+#include "display/driver/ws_drv_display.h"
 #include "tinyusb/Wippersnapper_FS.h" // adafruit_wippersnapper
 
-ws_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
+ws_drv_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
 
 // lvgl
 // FA symbol glyphs
