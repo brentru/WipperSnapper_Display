@@ -335,6 +335,7 @@ void Wippersnapper_FS::parseSecrets() {
   if (!secretsFile) {
     // TODO: Handle error here!
     Serial.println("ERROR: Could not open secrets.json file for reading!");
+    // TODO, buildScreenError("omg", "error");
     fsHalt();
   }
 
@@ -346,6 +347,7 @@ void Wippersnapper_FS::parseSecrets() {
 
     writeToBootOut("ERROR: deserializeJson() failed with code\n");
     writeToBootOut(err.c_str());
+    buildScreenError("Error within secrets.json!", "Failed to deserialize, please check file's content again." );
     fsHalt();
   }
 
@@ -355,10 +357,8 @@ void Wippersnapper_FS::parseSecrets() {
   if (io_username == nullptr) {
     Serial.println("ERROR: invalid io_username value in secrets.json!");
     writeToBootOut("ERROR: invalid io_username value in secrets.json!\n");
-    while (1) {
-      // statusLEDSolid(WS_LED_STATUS_FS_WRITE);
-      yield();
-    }
+    buildScreenError("Error within secrets.json!", "Invalid (or missing) io_username value within secrets.json!" );
+    fsHalt();
   }
 
   // check if username is from templated json

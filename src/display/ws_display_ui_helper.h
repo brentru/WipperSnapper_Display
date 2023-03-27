@@ -29,12 +29,12 @@ static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
 
 /* Sets the lvgl default background to black */
-void set_bg_black() {
+static void set_bg_black() {
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
 }
 
 // TODO: Can we make this type of thing reusable whenever we need to set up an error?
-void buildScreenError(char *errorHeader, char *errorInstructions) {
+static void buildScreenError(char *errorHeader, char *errorInstructions) {
 
   // Add circle checkmark
   lv_obj_t *labelErrorTriangle = lv_label_create(lv_scr_act());
@@ -75,7 +75,7 @@ void buildScreenError(char *errorHeader, char *errorInstructions) {
   lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, 0, 65);
 }
 
-void delete_load_screen() {
+static void delete_load_screen() {
     lv_obj_del(lblIconFile);
     lv_obj_del(lblIconWiFi);
     // TODO: More! 
@@ -83,7 +83,7 @@ void delete_load_screen() {
 }
 
 /* Dynamically builds and shows the loading screen */
-void build_load_screen() {
+static void build_load_screen() {
   // adding loading screen image
   lv_obj_t *icon = lv_img_create(lv_scr_act());
   lv_img_set_src(icon, &ws_icon_100px);
