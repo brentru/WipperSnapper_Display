@@ -19,9 +19,9 @@ void provision() {
     // for now, we'll mock it as false since we need the alert screen to appear
     bool configFileExists = false;
     if (! configFileExists) {
-        // TODO
         delete_load_screen();
         buildScreenError(ERR_NO_JSON_HEADER, ERR_NO_JSON_INSTRUCTIONS);
+        fileSystem->fsHalt();
     }
 }
 
