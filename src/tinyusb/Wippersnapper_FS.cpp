@@ -102,19 +102,25 @@ Wippersnapper_FS::Wippersnapper_FS() {
   // If a filesystem does not already exist - attempt to initialize a new
   // filesystem
 
-  if (!initFilesystem()) {
-    Serial.println("ERROR Initializing Filesystem");
+/*    if (!initFilesystem()) {
+    //Serial.println("ERROR Initializing Filesystem");
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, HIGH);
     // setStatusLEDColor(RED);
     while (1)
       ;
-  }
+  } */
+
+  flash.begin();
 
   // Initialize USB-MSD
   initUSBMSC();
 
-  // If we created a new filesystem, halt until user RESETs device.
+  wipperFatFs.begin(&flash);
+
+/*   // If we created a new filesystem, halt until user RESETs device.
   if (_freshFS)
-    fsHalt();
+    fsHalt(); */
 }
 
 /************************************************************/
@@ -210,7 +216,7 @@ void Wippersnapper_FS::initUSBMSC() {
                                qspi_msc_flush_cb);
 
   // Set disk size, block size should be 512 regardless of spi flash page size
-  usb_msc.setCapacity(flash.pageSize() * flash.numPages() / 512, 512);
+  usb_msc.setCapacity(flash.size()/512, 512);
 
   // MSC is ready for read/write
   usb_msc.setUnitReady(true);
@@ -335,7 +341,7 @@ void Wippersnapper_FS::parseSecrets() {
   if (!secretsFile) {
     // TODO: Handle error here!
     Serial.println("ERROR: Could not open secrets.json file for reading!");
-    // TODO, buildScreenError("omg", "error");
+    // TODO, // buildScreenError("omg", "error");
     fsHalt();
   }
 
@@ -347,7 +353,7 @@ void Wippersnapper_FS::parseSecrets() {
 
     writeToBootOut("ERROR: deserializeJson() failed with code\n");
     writeToBootOut(err.c_str());
-    buildScreenError("Error within secrets.json!", "Failed to deserialize, please check file's content again." );
+    // buildScreenError("Error within secrets.json!", "Failed to deserialize, please check file's content again." );
     fsHalt();
   }
 
@@ -357,7 +363,7 @@ void Wippersnapper_FS::parseSecrets() {
   if (io_username == nullptr) {
     Serial.println("ERROR: invalid io_username value in secrets.json!");
     writeToBootOut("ERROR: invalid io_username value in secrets.json!\n");
-    buildScreenError("Error within secrets.json!", "Invalid (or missing) io_username value within secrets.json!" );
+    // buildScreenError("Error within secrets.json!", "Invalid (or missing) io_username value within secrets.json!" );
     fsHalt();
   }
 

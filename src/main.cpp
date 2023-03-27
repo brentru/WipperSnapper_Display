@@ -4,6 +4,8 @@
 
 ws_drv_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
 
+Wippersnapper_FS *fileSystem = nullptr;
+
 #define ERR_NO_JSON_HEADER "Secrets.json file not found!"
 #define ERR_NO_JSON_INSTRUCTIONS                                               \
   "1. Visit adafru.it/123456 to generate a settings.json file.\n2.Drag and "   \
@@ -11,29 +13,16 @@ ws_drv_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
   "board."
 
 void provision() {
-    Serial.println("provision...");
     // create FS
-    Wippersnapper_FS *fileSystem = new Wippersnapper_FS();
-
-    // parse secrets.json
-    
-
-/*     // Does secrets.json file exist on the filesystem?
-    // configFileExists()
-    // for now, we'll mock it as false since we need the alert screen to appear
-    bool configFileExists = false;
-    if (! configFileExists) {
-        delete_load_screen();
-        buildScreenError(ERR_NO_JSON_HEADER, ERR_NO_JSON_INSTRUCTIONS);
-        fileSystem->fsHalt();
-    } */
+    fileSystem = new Wippersnapper_FS();
 }
 
 
 void setup(void) {
-  Serial.begin(115200);
-  // while (!Serial) delay(10);
 
+  provision();
+  Serial.begin(115200);
+  //while (!Serial) delay(10);
   tft_st7789.setResolution(240, 240);
   tft_st7789.enableLogging();
   tft_st7789.begin();
@@ -41,11 +30,8 @@ void setup(void) {
   // set screen background to black
   set_bg_black();
 
-
   // build the load screen first
   build_load_screen();
-
-  provision();
 
   Serial.println("going into loop()");
 }

@@ -23,7 +23,7 @@
 #include "fatfs/ff.h" // NOTE: This should be #included before fatfs/diskio.h!!!
 #include "fatfs/diskio.h"
 
-#include "display/ws_display_ui_helper.h"
+// #include "display/ws_display_ui_helper.h"
 
 // from wippersnapper.h
 #define WS_VERSION "lvgl-test-harness"
