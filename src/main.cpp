@@ -17,7 +17,7 @@ void provision() {
     // Does secrets.json file exist on the filesystem?
     // configFileExists()
     // for now, we'll mock it as false since we need the alert screen to appear
-    bool configFileExists = false;
+    //bool configFileExists = false;
     if (! configFileExists) {
         delete_load_screen();
         buildScreenError(ERR_NO_JSON_HEADER, ERR_NO_JSON_INSTRUCTIONS);
