@@ -4,8 +4,30 @@ void ws_display_ui_helper::set_bg_black(){
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
 }
 
-void ws_display_ui_helper::greenFile() {
-    lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
+void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
+    lv_style_t *iconStyle;
+    switch (iconType)
+    {
+    case file:
+        iconStyle = &styleIconFile;
+        break;
+    case wifi:
+        iconStyle = &styleIconWiFi;
+        break;
+    case cloud:
+        iconStyle = &styleIconCloud;
+        break;
+    case turtle:
+        iconStyle = &styleIconTurtle30px;
+        break;
+    case checkmark:
+        iconStyle = &styleIconCheckmark;
+        break;
+    default:
+        return;
+    }
+    // set style!
+    lv_style_set_text_color(iconStyle, lv_palette_main(LV_PALETTE_GREEN));
 }
 
 void ws_display_ui_helper::show_scr_load(){

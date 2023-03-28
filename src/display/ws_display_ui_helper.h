@@ -15,10 +15,10 @@ LV_IMG_DECLARE(ws_icon_100px);
 // FA fonts
 LV_FONT_DECLARE(errorTriangle);
 LV_FONT_DECLARE(file);
-LV_FONT_DECLARE(circle_30px);
+LV_FONT_DECLARE(wifi_30px);
 LV_FONT_DECLARE(cloud_30px);
 LV_FONT_DECLARE(turtle_30px);
-LV_FONT_DECLARE(wifi_30px);
+LV_FONT_DECLARE(circle_30px);
 
 // loading bar icons
 static lv_obj_t *lblIconFile, *lblIconWiFi;
@@ -26,6 +26,9 @@ static lv_obj_t *lblIconFile, *lblIconWiFi;
 // styles used by the loading screen, need to be global or static
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
+
+// used by set_load_bar_icon_complete()
+enum loadBarIcons { file, wifi, cloud, turtle, checkmark };
 
 class ws_display_ui_helper : public ws_drv_display {
 public:
@@ -35,9 +38,9 @@ public:
   void set_bg_black();
 
   void show_scr_load();
+  void set_load_bar_icon_complete(loadBarIcons iconType);
   void clear_scr_load();
 
   void show_scr_error();
-  void greenFile();
 };
 #endif // WS_DISPLAY_UI_HELPER_H

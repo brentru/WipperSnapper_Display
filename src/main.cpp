@@ -27,10 +27,21 @@ void setup(void) {
   tft_st7789.enableLogging();
   // while (!Serial) delay(10);
 
+  // parse secrets file
   // fileSystem->parseSecrets();
   // call task handler
-  ui_helper.greenFile();
+  ui_helper.set_load_bar_icon_complete(file);
   lv_task_handler();
+
+  // connect wifi
+  // TODO!
+  // bring in netFSM
+
+  // connect MQTT
+  // TODO!
+
+  // connect to WipperSnapper
+  // TODO!
 
   // Serial.println("going into loop()");
 }
