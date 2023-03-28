@@ -21,10 +21,11 @@ void setup(void) {
 
   // set screen background to black
   set_bg_black();
-
   // build the load screen first
   build_load_screen();
-  
+  // call task handler
+  lv_task_handler();
+
 
   // init USB-MSC and FS
   fileSystem = new Wippersnapper_FS();
@@ -34,7 +35,7 @@ void setup(void) {
   tft_st7789.enableLogging();
   //while (!Serial) delay(10);
 
-  
+  fileSystem->parseSecrets();
 
 
   // Serial.println("going into loop()");
