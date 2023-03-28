@@ -94,6 +94,8 @@ bool setVolumeLabel() {
 */
 /**************************************************************************/
 Wippersnapper_FS::Wippersnapper_FS() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
   // Detach USB device during init.
   TinyUSBDevice.detach();
   // Wait for detach
@@ -102,25 +104,21 @@ Wippersnapper_FS::Wippersnapper_FS() {
   // If a filesystem does not already exist - attempt to initialize a new
   // filesystem
 
-/*    if (!initFilesystem()) {
+  if (!initFilesystem()) {
     //Serial.println("ERROR Initializing Filesystem");
-    pinMode(LED_BUILTIN, OUTPUT);
-    digitalWrite(LED_BUILTIN, HIGH);
     // setStatusLEDColor(RED);
     while (1)
       ;
-  } */
+  }
 
-  flash.begin();
 
   // Initialize USB-MSD
   initUSBMSC();
 
-  wipperFatFs.begin(&flash);
-
 /*   // If we created a new filesystem, halt until user RESETs device.
   if (_freshFS)
     fsHalt(); */
+    digitalWrite(LED_BUILTIN, LOW);
 }
 
 /************************************************************/
@@ -133,6 +131,8 @@ Wippersnapper_FS::~Wippersnapper_FS() {
   // io_key = NULL;
 }
 
+
+
 /**************************************************************************/
 /*!
     @brief    Initializes the flash filesystem.
@@ -140,9 +140,28 @@ Wippersnapper_FS::~Wippersnapper_FS() {
 */
 /**************************************************************************/
 bool Wippersnapper_FS::initFilesystem() {
+
   // Init. flash library
-  if (!flash.begin())
-    return false;
+  flash.begin();
+
+  // init file system on flash
+  bool fs_formatted = wipperFatFs.begin(&flash);
+
+  // check if formatted
+  if ( !fs_formatted )
+  {
+    fs_formatted = wipperFatFs.begin(&flash);
+    if (!fs_formatted)
+    {
+      /* Serial.println("Failed to init files system, flash may not be formatted");
+      Serial.println("Please format it as FAT12 with your PC or using Adafruit_SPIFlash's SdFat_format example:");
+      Serial.println("- https://github.com/adafruit/Adafruit_SPIFlash/tree/master/examples/SdFat_format");
+      Serial.println(); */
+      //fsHalt();
+      return false;
+    }
+  }
+
 
   // Check if FS exists
   if (!wipperFatFs.begin(&flash)) {
@@ -161,23 +180,21 @@ bool Wippersnapper_FS::initFilesystem() {
     _freshFS = true;
   }
 
-  // Check new FS
-  if (!wipperFatFs.begin(&flash))
-    return false;
-
-  // If CircuitPython was previously installed - erase CPY FS
+   // If CircuitPython was previously installed - erase CPY FS
   eraseCPFS();
 
   // If WipperSnapper was previously installed - remove the
   // wippersnapper_boot_out.txt file
   eraseBootFile();
 
-  // No file indexing on macOS
+  
+   // No file indexing on macOS
   wipperFatFs.mkdir("/.fseventsd/");
   File32 writeFile = wipperFatFs.open("/.fseventsd/no_log", FILE_WRITE);
   if (!writeFile)
     return false;
   writeFile.close();
+  digitalWrite(LED_BUILTIN, LOW);
 
   writeFile = wipperFatFs.open("/.metadata_never_index", FILE_WRITE);
   if (!writeFile)
@@ -275,7 +292,6 @@ void Wippersnapper_FS::eraseBootFile() {
 */
 /**************************************************************************/
 bool Wippersnapper_FS::createBootFile() {
-  bool is_success = false;
   char sMAC[18] = {0};
 
   File32 bootFile = wipperFatFs.open("/wipper_boot_out.txt", FILE_WRITE);
@@ -293,11 +309,11 @@ bool Wippersnapper_FS::createBootFile() {
 
     bootFile.flush();
     bootFile.close();
-    is_success = true;
   } else {
     bootFile.close();
+    return false;
   }
-  return is_success;
+  return true;
 }
 
 /**************************************************************************/

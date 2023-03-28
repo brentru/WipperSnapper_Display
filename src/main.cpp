@@ -12,19 +12,11 @@ Wippersnapper_FS *fileSystem = nullptr;
   "drop the secrets.json file to the WIPPER drive.\n3. Press RESET on your "   \
   "board."
 
-void provision() {
-    // create FS
-    fileSystem = new Wippersnapper_FS();
-}
-
 
 void setup(void) {
 
-  provision();
-  Serial.begin(115200);
-  //while (!Serial) delay(10);
   tft_st7789.setResolution(240, 240);
-  tft_st7789.enableLogging();
+  
   tft_st7789.begin();
 
   // set screen background to black
@@ -32,8 +24,20 @@ void setup(void) {
 
   // build the load screen first
   build_load_screen();
+  
 
-  Serial.println("going into loop()");
+  // init USB-MSC and FS
+  fileSystem = new Wippersnapper_FS();
+
+  // begin serial comm.
+  Serial.begin(115200);
+  tft_st7789.enableLogging();
+  //while (!Serial) delay(10);
+
+  
+
+
+  // Serial.println("going into loop()");
 }
 
 void loop(void) {
