@@ -346,6 +346,8 @@ void Wippersnapper_FS::createConfigFileSkel() {
       "* Please edit the secrets.json file. Then, reset your board.\n");
 }
 
+
+
 /**************************************************************************/
 /*!
     @brief    Parses a secrets.json file on the flash filesystem.
