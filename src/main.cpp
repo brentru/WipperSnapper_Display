@@ -33,11 +33,11 @@ void runNetFSM() {
   while (fsmNetwork != FSM_NET_CONNECTED) {
     switch (fsmNetwork) {
     case FSM_NET_CHECK_MQTT:
-/*       if (mqtt->connected()) {
-        // Serial.println("Connected to Adafruit IO!");
-        fsmNetwork = FSM_NET_CONNECTED;
-        return;
-      } */
+      /*       if (mqtt->connected()) {
+              // Serial.println("Connected to Adafruit IO!");
+              fsmNetwork = FSM_NET_CONNECTED;
+              return;
+            } */
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_CHECK_NETWORK:
@@ -73,10 +73,10 @@ void runNetFSM() {
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
         // did we connect?
         if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
-            digitalWrite(LED_BUILTIN, LOW);
-            break;
+          digitalWrite(LED_BUILTIN, LOW);
+          break;
         }
-          
+
         maxAttempts--;
       }
 
@@ -132,8 +132,9 @@ void setup(void) {
 
   // begin serial comm.
   Serial.begin(115200);
-  //tft_st7789.enableLogging();
-  while (!Serial) delay(10);
+  // tft_st7789.enableLogging();
+  while (!Serial)
+    delay(10);
 
   // parse secrets file
   // fileSystem->parseSecrets();
