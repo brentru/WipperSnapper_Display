@@ -3,8 +3,8 @@
 #include "display/ws_drv_display.h"
 
 // from adafruit_wippersnapper
-#include "tinyusb/Wippersnapper_FS.h" 
 #include "Wippersnapper_ESP32.h"
+#include "tinyusb/Wippersnapper_FS.h"
 Wippersnapper_ESP32 Wippersnapper_WiFi;
 
 ws_drv_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
@@ -24,7 +24,6 @@ typedef enum {
   FSM_NET_ESTABLISH_MQTT,
 } fsm_net_t;
 
-
 void runNetFSM() {
   // // WS.feedWDT();
   // Initial state
@@ -34,11 +33,11 @@ void runNetFSM() {
   while (fsmNetwork != FSM_NET_CONNECTED) {
     switch (fsmNetwork) {
     case FSM_NET_CHECK_MQTT:
-      if (mqtt->connected()) {
+/*       if (mqtt->connected()) {
         // Serial.println("Connected to Adafruit IO!");
         fsmNetwork = FSM_NET_CONNECTED;
         return;
-      }
+      } */
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_CHECK_NETWORK:
@@ -51,10 +50,11 @@ void runNetFSM() {
       fsmNetwork = FSM_NET_ESTABLISH_NETWORK;
       break;
     case FSM_NET_ESTABLISH_NETWORK:
+      digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
-      if (!Wippersnapper_WiFi.check_valid_ssid()){
+      if (!Wippersnapper_WiFi.check_valid_ssid()) {
         Serial.println("ERROR: Unable to find WiFi network...");
         delay(100000000);
       }
@@ -72,38 +72,42 @@ void runNetFSM() {
         // blink to simulate a delay to allow wifi connection to process
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
         // did we connect?
-        if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED)
-          break;
+        if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
+            digitalWrite(LED_BUILTIN, LOW);
+            break;
+        }
+          
         maxAttempts--;
       }
 
       // Validate connection
       if (Wippersnapper_WiFi.networkStatus() != WS_NET_CONNECTED)
-/*         haltError("ERROR: Unable to connect to WiFi, rebooting soon...",
-                  WS_LED_STATUS_WIFI_CONNECTING); */
-      fsmNetwork = FSM_NET_CHECK_NETWORK;
+        /*         haltError("ERROR: Unable to connect to WiFi, rebooting
+           soon...", WS_LED_STATUS_WIFI_CONNECTING); */
+        fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
-/*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
-      // Attempt to connect
-      maxAttempts = 5;
-      while (maxAttempts > 0) {
-        // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-        int8_t mqttRC = WS._mqtt->connect();
-        if (mqttRC == WS_MQTT_CONNECTED) {
-          fsmNetwork = FSM_NET_CHECK_MQTT;
-          break;
-        }
-        Serial.println("Unable to connect to Adafruit IO MQTT, retrying in 3 seconds...");
-        // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-        delay(1800);
-        maxAttempts--;
-      }
-      if (fsmNetwork != FSM_NET_CHECK_MQTT)
-        haltError(
-            "ERROR: Unable to connect to Adafruit.IO MQTT, rebooting soon...",
-            WS_LED_STATUS_MQTT_CONNECTING); */
+      /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
+            // Attempt to connect
+            maxAttempts = 5;
+            while (maxAttempts > 0) {
+              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
+              int8_t mqttRC = WS._mqtt->connect();
+              if (mqttRC == WS_MQTT_CONNECTED) {
+                fsmNetwork = FSM_NET_CHECK_MQTT;
+                break;
+              }
+              Serial.println("Unable to connect to Adafruit IO MQTT, retrying in
+         3 seconds...");
+              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
+              delay(1800);
+              maxAttempts--;
+            }
+            if (fsmNetwork != FSM_NET_CHECK_MQTT)
+              haltError(
+                  "ERROR: Unable to connect to Adafruit.IO MQTT, rebooting
+         soon...", WS_LED_STATUS_MQTT_CONNECTING); */
       break;
     default:
       break;
@@ -128,8 +132,8 @@ void setup(void) {
 
   // begin serial comm.
   Serial.begin(115200);
-  tft_st7789.enableLogging();
-  // while (!Serial) delay(10);
+  //tft_st7789.enableLogging();
+  while (!Serial) delay(10);
 
   // parse secrets file
   // fileSystem->parseSecrets();

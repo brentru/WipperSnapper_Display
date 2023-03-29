@@ -28,7 +28,13 @@ static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
 
 // used by set_load_bar_icon_complete()
-enum loadBarIcons { loadBarIconFile, loadBarIconWifi, loadBarIconCloud, loadBarIconTurtle, loadBarIconCheckmark };
+enum loadBarIcons {
+  loadBarIconFile,
+  loadBarIconWifi,
+  loadBarIconCloud,
+  loadBarIconTurtle,
+  loadBarIconCheckmark
+};
 
 class ws_display_ui_helper : public ws_drv_display {
 public:

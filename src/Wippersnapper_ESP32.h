@@ -226,8 +226,8 @@ public:
   }
 
 protected:
-  const char *_ssid;              ///< WiFi SSID
-  const char *_pass;              ///< WiFi password
+  const char *_ssid = "Transit";              ///< WiFi SSID
+  const char *_pass = "BigWindows";              ///< WiFi password
   const char *_mqttBrokerURL;     ///< MQTT broker URL
   WiFiClientSecure *_mqtt_client; ///< Pointer to a secure MQTT client object
   ws_status_t _status;
