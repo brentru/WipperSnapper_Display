@@ -8,26 +8,28 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     lv_style_t *iconStyle;
     switch (iconType)
     {
-    case file:
+    case loadBarIconFile:
         iconStyle = &styleIconFile;
         break;
-    case wifi:
+    case loadBarIconWifi:
         iconStyle = &styleIconWiFi;
         break;
-    case cloud:
+    case loadBarIconCloud:
         iconStyle = &styleIconCloud;
         break;
-    case turtle:
+    case loadBarIconTurtle:
         iconStyle = &styleIconTurtle30px;
         break;
-    case checkmark:
+    case loadBarIconCheckmark:
         iconStyle = &styleIconCheckmark;
         break;
     default:
         return;
     }
     // set style!
-    lv_style_set_text_color(iconStyle, lv_palette_main(LV_PALETTE_GREEN));
+    lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
+    lv_obj_refresh_style(lblIconFile, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+    lv_task_handler();
 }
 
 void ws_display_ui_helper::show_scr_load(){
