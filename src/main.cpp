@@ -154,6 +154,11 @@ void setup(void) {
 
   Serial.println("going into application loop()");
   // BRENT: Dont even run the fsm focus on how we're going to use the timer!!
+  // Note for Monday brent: this works OK, the last thing you did was 
+  // add lblstatustext to the ws_display_ui helper class which caused the callback
+  // to be called, prior to that it was a nullptr and would not open.
+  // next up - update to setstatuslabel to change the text and then pass an argument
+  // instead of NULL at the end
   lv_res_t resp = lv_event_send(ui_helper.lblStatusText, LV_EVENT_REFRESH, NULL);
   lv_task_handler();
   Serial.print("Res: "); Serial.println(resp);
