@@ -23,6 +23,9 @@ LV_FONT_DECLARE(circle_30px);
 // loading bar icons
 static lv_obj_t *lblIconFile, *lblIconWiFi;
 
+// loading bar text label
+static lv_obj_t *lblStatusText;
+
 // styles used by the loading screen, need to be global or static
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
@@ -45,6 +48,7 @@ public:
 
   void show_scr_load();
   void set_load_bar_icon_complete(loadBarIcons iconType);
+  void set_status_label(const char *text);
   void clear_scr_load();
 
   void show_scr_error();

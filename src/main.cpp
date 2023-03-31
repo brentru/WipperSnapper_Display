@@ -43,6 +43,7 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
+        ui_helper.set_status_label("Connected to WiFi!");
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
@@ -52,6 +53,7 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_NETWORK:
       // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
+      ui_helper.set_status_label("Attempting to connect to: [SSID...]");
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
       if (!Wippersnapper_WiFi.check_valid_ssid()) {
@@ -91,6 +93,7 @@ void runNetFSM() {
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
+      ui_helper.set_status_label("Connecting to Adafruit.IO...");
       /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
             // Attempt to connect
             maxAttempts = 5;
@@ -142,20 +145,14 @@ void setup(void) {
   // parse secrets file
   // fileSystem->parseSecrets();
   // call task handler
+  ui_helper.set_status_label("Validating secrets file...");
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
+  ui_helper.set_status_label(" ");
 
-  // connect wifi
-  // TODO!
-  // bring in netFSM
+  // run net FSM
   runNetFSM();
 
-  // connect MQTT
-  // TODO!
-
-  // connect to WipperSnapper
-  // TODO!
-
-  // Serial.println("going into loop()");
+  Serial.println("going into application loop()");
 }
 
 void loop(void) {
