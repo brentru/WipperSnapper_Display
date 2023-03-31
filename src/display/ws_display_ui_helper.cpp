@@ -9,10 +9,12 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     switch (iconType)
     {
     case loadBarIconFile:
-        iconStyle = &styleIconFile;
+        lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
+        lv_obj_refresh_style(lblIconFile, LV_PART_MAIN, LV_STYLE_PROP_ANY);
         break;
     case loadBarIconWifi:
-        iconStyle = &styleIconWiFi;
+        lv_style_set_text_color(&styleIconWiFi, lv_palette_main(LV_PALETTE_GREEN));
+        lv_obj_refresh_style(lblIconWiFi, LV_PART_MAIN, LV_STYLE_PROP_ANY);
         break;
     case loadBarIconCloud:
         iconStyle = &styleIconCloud;
@@ -26,9 +28,6 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     default:
         return;
     }
-    // set style!
-    lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
-    lv_obj_refresh_style(lblIconFile, LV_PART_MAIN, LV_STYLE_PROP_ANY);
     lv_task_handler();
 }
 

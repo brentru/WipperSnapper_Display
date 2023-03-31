@@ -60,8 +60,8 @@ public:
   */
   /**************************************************************************/
   Wippersnapper_ESP32() {
-    _ssid = 0;
-    _pass = 0;
+    _ssid = "Transit";
+    _pass = "BigWindows";
     _mqtt_client = new WiFiClientSecure;
   }
 
@@ -115,21 +115,29 @@ public:
   bool check_valid_ssid() {
     // Set WiFi to station mode and disconnect from an AP if it was previously
     // connected
+    digitalWrite(LED_BUILTIN, HIGH);
+    Serial.println("setting STA mode...");
     WiFi.mode(WIFI_STA);
+    Serial.println("disconnecting from WiFi first...");
     WiFi.disconnect();
     delay(100);
 
     // Perform a network scan
+    Serial.println("Scanning networks...");
     int n = WiFi.scanNetworks();
     if (n == 0) {
+      Serial.println("No wifi networks found!");
       // WS_DEBUG_PRINTLN("ERROR: No WiFi networks found!");
       return false;
     }
 
     // Was the network within secrets.json found?
+    Serial.println("Scan OK, checking for WiFi network!");
     for (int i = 0; i < n; ++i) {
-      if (strcmp(_ssid, WiFi.SSID(i).c_str()) == 0)
+      if (strcmp(_ssid, WiFi.SSID(i).c_str()) == 0) {
+        digitalWrite(LED_BUILTIN, LOW);
         return true;
+      }
     }
 
     // User-set network not found, print scan results to serial console
@@ -141,7 +149,7 @@ public:
       WS_DEBUG_PRINT(WiFi.RSSI(i));
       WS_DEBUG_PRINTLN("dB");
     } */
-
+    
     return false;
   }
 
@@ -226,8 +234,8 @@ public:
   }
 
 protected:
-  const char *_ssid = "Transit";              ///< WiFi SSID
-  const char *_pass = "BigWindows";              ///< WiFi password
+  const char *_ssid;              ///< WiFi SSID
+  const char *_pass;              ///< WiFi password
   const char *_mqttBrokerURL;     ///< MQTT broker URL
   WiFiClientSecure *_mqtt_client; ///< Pointer to a secure MQTT client object
   ws_status_t _status;
