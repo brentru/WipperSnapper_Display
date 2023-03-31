@@ -43,7 +43,7 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        ui_helper.set_status_label("Connected to WiFi!");
+        ui_helper.set_status_label("WS_NET_CONNECTED");
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
@@ -53,7 +53,7 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_NETWORK:
       // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
-      ui_helper.set_status_label("Attempting to connect to: [SSID...]");
+      ui_helper.set_status_label("WIFI");
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
       if (!Wippersnapper_WiFi.check_valid_ssid()) {
@@ -121,6 +121,7 @@ void runNetFSM() {
   }
 }
 
+
 void setup(void) {
 
   tft_st7789.setResolution(240, 240);
@@ -130,6 +131,7 @@ void setup(void) {
   ui_helper.set_bg_black();
   // build the load screen first
   ui_helper.show_scr_load();
+  ui_helper.set_status_label("Validating secrets file...");
   // call task handler
   lv_task_handler();
 
@@ -138,21 +140,23 @@ void setup(void) {
 
   // begin serial comm.
   Serial.begin(115200);
-  // tft_st7789.enableLogging();
+  tft_st7789.enableLogging();
   while (!Serial)
     delay(10);
 
   // parse secrets file
   // fileSystem->parseSecrets();
   // call task handler
-  ui_helper.set_status_label("Validating secrets file...");
-  ui_helper.set_load_bar_icon_complete(loadBarIconFile);
-  ui_helper.set_status_label(" ");
+  // ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 
   // run net FSM
-  runNetFSM();
+  // runNetFSM();
 
   Serial.println("going into application loop()");
+  // BRENT: Dont even run the fsm focus on how we're going to use the timer!!
+  lv_res_t resp = lv_event_send(ui_helper.lblStatusText, LV_EVENT_REFRESH, NULL);
+  lv_task_handler();
+  Serial.print("Res: "); Serial.println(resp);
 }
 
 void loop(void) {

@@ -1,8 +1,17 @@
 #include "ws_display_ui_helper.h"
 
+
+
+static void my_event_cb(lv_event_t * event)
+{
+    Serial.println("eventcb called!");
+    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_white(), LV_STATE_DEFAULT);
+}
+
 void ws_display_ui_helper::set_bg_black(){
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
 }
+
 
 void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     lv_style_t *iconStyle;
@@ -99,17 +108,20 @@ void ws_display_ui_helper::show_scr_load(){
 
   // Add status text label
   lblStatusText = lv_label_create(lv_scr_act());
-  lv_label_set_long_mode(lblStatusText, LV_LABEL_LONG_WRAP);
+  // lv_label_set_long_mode(lblStatusText, LV_LABEL_LONG_WRAP);
   lv_obj_set_style_text_font(lblStatusText, &lv_font_montserrat_18, 0);
   lv_obj_set_style_text_color(lblStatusText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblStatusText, "\0");
   lv_obj_align(lblStatusText, LV_ALIGN_BOTTOM_LEFT, 0, -5);
+  lv_obj_add_event_cb(lblStatusText, my_event_cb, LV_EVENT_REFRESH, NULL);
 }
 
 /* Sets the loading screen's text label */
 void ws_display_ui_helper::set_status_label(const char *text) {
   lv_label_set_text(lblStatusText, text);
-  lv_obj_refresh_style(lblStatusText, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+  //lv_obj_refresh_style(lblStatusText, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+  lv_obj_refresh_style(lblStatusText, LV_PART_ANY, LV_STYLE_PROP_ANY);
+  lv_task_handler();
 }
 
 void ws_display_ui_helper::clear_scr_load(){}
