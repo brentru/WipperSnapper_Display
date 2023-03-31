@@ -50,7 +50,7 @@ void runNetFSM() {
       fsmNetwork = FSM_NET_ESTABLISH_NETWORK;
       break;
     case FSM_NET_ESTABLISH_NETWORK:
-      //digitalWrite(LED_BUILTIN, HIGH);
+      // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
@@ -87,7 +87,7 @@ void runNetFSM() {
       // Validate connection
       if (Wippersnapper_WiFi.networkStatus() != WS_NET_CONNECTED)
         Serial.println("Unable to connect, rebooting...");
-    fsmNetwork = FSM_NET_CHECK_NETWORK;
+      fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
