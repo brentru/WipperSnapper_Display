@@ -131,7 +131,7 @@ void setup(void) {
   ui_helper.set_bg_black();
   // build the load screen first
   ui_helper.show_scr_load();
-  ui_helper.set_status_label("Validating secrets file...");
+  //ui_helper.set_status_label("Validating secrets file...");
   // call task handler
   lv_task_handler();
 
@@ -152,6 +152,7 @@ void setup(void) {
   // run net FSM
   // runNetFSM();
 
+  ui_helper.set_label_text("test text!");
   Serial.println("going into application loop()");
   // BRENT: Dont even run the fsm focus on how we're going to use the timer!!
   // Note for Monday brent: this works OK, the last thing you did was 
@@ -159,9 +160,9 @@ void setup(void) {
   // to be called, prior to that it was a nullptr and would not open.
   // next up - update to setstatuslabel to change the text and then pass an argument
   // instead of NULL at the end
-  lv_res_t resp = lv_event_send(ui_helper.lblStatusText, LV_EVENT_REFRESH, NULL);
-  lv_task_handler();
-  Serial.print("Res: "); Serial.println(resp);
+  // lv_res_t resp = lv_event_send(ui_helper.lblStatusText, LV_EVENT_REFRESH, NULL);
+  // lv_task_handler();
+  // Serial.print("Res: "); Serial.println(resp);
 }
 
 void loop(void) {

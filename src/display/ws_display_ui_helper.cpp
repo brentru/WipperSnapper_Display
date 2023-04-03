@@ -5,7 +5,19 @@
 static void my_event_cb(lv_event_t * event)
 {
     Serial.println("eventcb called!");
-    lv_obj_set_style_bg_color(lv_scr_act(), lv_color_white(), LV_STATE_DEFAULT);
+    const char *text = (const char*) lv_event_get_param(event);
+    Serial.print("text: ");
+    Serial.println(text);
+
+    lv_label_set_text(lblStatusText, text);
+    //lv_obj_set_style_bg_color(lv_scr_act(), lv_color_white(), LV_STATE_DEFAULT);
+}
+
+// try propigating the event to the callback, for the app code
+void ws_display_ui_helper::set_label_text(const char *text) {
+  Serial.print("set_label_text (text): "); Serial.println(text);
+
+  lv_event_send(lblStatusText, LV_EVENT_REFRESH, &text);
 }
 
 void ws_display_ui_helper::set_bg_black(){
