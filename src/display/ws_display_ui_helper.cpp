@@ -6,18 +6,18 @@ static void my_event_cb(lv_event_t * event)
 {
     Serial.println("eventcb called!");
     //static const char *text = static_cast<const char*> (lv_event_get_param(event));
-    int* intPtr2{ static_cast<int*>(lv_event_get_param(event)) };
+    // int* intPtr2{ static_cast<int*>(lv_event_get_param(event)) };
+    const char** charPtr{ static_cast<const char**>(lv_event_get_param(event)) };
     Serial.print("text: ");
-    Serial.println(*intPtr2);
-    //lv_label_set_text(lblStatusText, text);
+    Serial.println(*charPtr);
+    lv_label_set_text(lblStatusText, *charPtr);
 }
 
 // try propigating the event to the callback, for the app code
 void ws_display_ui_helper::set_label_text(const char *text) {
   Serial.print("set_label_text (text): "); Serial.println(text);
   // lblText = text;
-  int value = 5;
-  lv_event_send(lblStatusText, LV_EVENT_REFRESH, &value);
+  lv_event_send(lblStatusText, LV_EVENT_REFRESH, &text);
 }
 
 void ws_display_ui_helper::set_bg_black(){
