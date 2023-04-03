@@ -29,6 +29,8 @@ static lv_obj_t *lblStatusText;
 static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
     styleIconCloud, styleIconCheckmark;
 
+static const char *lblText;
+
 // used by set_load_bar_icon_complete()
 enum loadBarIcons {
   loadBarIconFile,
