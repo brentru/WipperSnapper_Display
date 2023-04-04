@@ -5,12 +5,12 @@
 static void my_event_cb(lv_event_t * event)
 {
     Serial.println("eventcb called!");
-    //static const char *text = static_cast<const char*> (lv_event_get_param(event));
-    // int* intPtr2{ static_cast<int*>(lv_event_get_param(event)) };
     const char** charPtr{ static_cast<const char**>(lv_event_get_param(event)) };
     Serial.print("text: ");
     Serial.println(*charPtr);
     lv_label_set_text(lblStatusText, *charPtr);
+    //lv_label_set_text(lblStatusText, NULL);
+    //lv_obj_update_layout(lblStatusText);
 }
 
 // try propigating the event to the callback, for the app code

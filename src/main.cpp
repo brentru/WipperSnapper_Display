@@ -43,8 +43,13 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        ui_helper.set_status_label("WS_NET_CONNECTED");
+        ui_helper.set_label_text("Connected to WiFi!");
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
+        delay(5);
+        lv_task_handler();
+        // TODO: This is for testing only and makes the following state
+        // unreachable!
+        return;
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
       }
@@ -53,7 +58,9 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_NETWORK:
       // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
-      ui_helper.set_status_label("WIFI");
+      ui_helper.set_label_text("Connecting to WiFi: [SSID]...");
+      delay(5);
+      lv_task_handler();
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
       if (!Wippersnapper_WiFi.check_valid_ssid()) {
@@ -93,7 +100,7 @@ void runNetFSM() {
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
-      ui_helper.set_status_label("Connecting to Adafruit.IO...");
+      ui_helper.set_label_text("Connecting to Adafruit.IO...");
       /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
             // Attempt to connect
             maxAttempts = 5;
@@ -121,7 +128,6 @@ void runNetFSM() {
   }
 }
 
-
 void setup(void) {
 
   tft_st7789.setResolution(240, 240);
@@ -131,7 +137,6 @@ void setup(void) {
   ui_helper.set_bg_black();
   // build the load screen first
   ui_helper.show_scr_load();
-  //ui_helper.set_status_label("Validating secrets file...");
   // call task handler
   lv_task_handler();
 
@@ -145,24 +150,15 @@ void setup(void) {
     delay(10);
 
   // parse secrets file
+  // ui_helper.set_status_label("Validating secrets file...");
+  ui_helper.set_label_text("Validating secrets file...");
   // fileSystem->parseSecrets();
   // call task handler
-  // ui_helper.set_load_bar_icon_complete(loadBarIconFile);
+  ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 
   // run net FSM
-  // runNetFSM();
-
-  ui_helper.set_label_text("test text!");
+  runNetFSM();
   Serial.println("going into application loop()");
-  // BRENT: Dont even run the fsm focus on how we're going to use the timer!!
-  // Note for Monday brent: this works OK, the last thing you did was 
-  // add lblstatustext to the ws_display_ui helper class which caused the callback
-  // to be called, prior to that it was a nullptr and would not open.
-  // next up - update to setstatuslabel to change the text and then pass an argument
-  // instead of NULL at the end
-  // lv_res_t resp = lv_event_send(ui_helper.lblStatusText, LV_EVENT_REFRESH, NULL);
-  // lv_task_handler();
-  // Serial.print("Res: "); Serial.println(resp);
 }
 
 void loop(void) {
