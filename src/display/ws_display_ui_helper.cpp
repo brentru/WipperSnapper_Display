@@ -9,8 +9,6 @@ static void my_event_cb(lv_event_t * event)
     Serial.print("text: ");
     Serial.println(*charPtr);
     lv_label_set_text(lblStatusText, *charPtr);
-    //lv_label_set_text(lblStatusText, NULL);
-    //lv_obj_update_layout(lblStatusText);
 }
 
 // try propigating the event to the callback, for the app code

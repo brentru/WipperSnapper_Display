@@ -44,12 +44,9 @@ void runNetFSM() {
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
         ui_helper.set_label_text("Connected to WiFi!");
-        ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         delay(5);
         lv_task_handler();
-        // TODO: This is for testing only and makes the following state
-        // unreachable!
-        return;
+        ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
       }
@@ -100,7 +97,8 @@ void runNetFSM() {
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
-      ui_helper.set_label_text("Connecting to Adafruit.IO...");
+      //ui_helper.set_label_text("Connecting to Adafruit.IO...");
+      return;
       /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
             // Attempt to connect
             maxAttempts = 5;
