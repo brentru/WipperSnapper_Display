@@ -29,6 +29,7 @@ void runNetFSM() {
   // Initial state
   fsm_net_t fsmNetwork;
   fsmNetwork = FSM_NET_CHECK_MQTT;
+  ws_status_t networkStatus;
   int maxAttempts;
   while (fsmNetwork != FSM_NET_CONNECTED) {
     switch (fsmNetwork) {
@@ -41,7 +42,7 @@ void runNetFSM() {
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_CHECK_NETWORK:
-      if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
+      if (networkStatus == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
         ui_helper.set_label_text("Connected to WiFi!");
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
@@ -63,13 +64,13 @@ void runNetFSM() {
       lv_task_handler();
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
-      if (!Wippersnapper_WiFi.check_valid_ssid()) {
+/*       if (!Wippersnapper_WiFi.check_valid_ssid()) {
         Serial.println("ERROR: Unable to find WiFi network...");
         delay(100000000);
-      }
+      } */
 
       // Attempt to connect to wireless network
-      maxAttempts = 5;
+/*       maxAttempts = 5;
       while (maxAttempts > 0) {
         // blink before we connect
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
@@ -91,36 +92,17 @@ void runNetFSM() {
           break;
         }
         maxAttempts--;
-      }
+      } */
 
       // Validate connection
-      if (Wippersnapper_WiFi.networkStatus() != WS_NET_CONNECTED)
-        Serial.println("Unable to connect, rebooting...");
+/*       if (Wippersnapper_WiFi.networkStatus() != WS_NET_CONNECTED)
+        Serial.println("Unable to connect, rebooting..."); */
+      networkStatus = WS_NET_CONNECTED;
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
       ui_helper.set_label_text("Connecting to Adafruit.IO...");
-      /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
-            // Attempt to connect
-            maxAttempts = 5;
-            while (maxAttempts > 0) {
-              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-              int8_t mqttRC = WS._mqtt->connect();
-              if (mqttRC == WS_MQTT_CONNECTED) {
-                fsmNetwork = FSM_NET_CHECK_MQTT;
-                break;
-              }
-              Serial.println("Unable to connect to Adafruit IO MQTT, retrying in
-         3 seconds...");
-              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-              delay(1800);
-              maxAttempts--;
-            }
-            if (fsmNetwork != FSM_NET_CHECK_MQTT)
-              haltError(
-                  "ERROR: Unable to connect to Adafruit.IO MQTT, rebooting
-         soon...", WS_LED_STATUS_MQTT_CONNECTING); */
       break;
     default:
       break;
@@ -150,13 +132,13 @@ void setup(void) {
     delay(10);
 
   // parse secrets file
-  // ui_helper.set_status_label("Validating secrets file...");
+  // TODO: for now we'll just display text
   ui_helper.set_label_text("Validating secrets file...");
-  // fileSystem->parseSecrets();
+
   // call task handler
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 
-  // run net FSM
+  // run the network FSM
   runNetFSM();
   Serial.println("going into application loop()");
 }
