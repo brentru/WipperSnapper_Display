@@ -64,6 +64,13 @@ public:
   // length of usernames/passwords/tokens
   // is 382 bytes, rounded to nearest power of 2.
   StaticJsonDocument<512> doc; /*!< Json configuration file */
+
+  const char *username; /*!< Adafruit IO username */
+  const char *key;         /*!< Adafruit IO key */
+  const char *network_ssid; /*!< Adafruit IO username */
+  const char *network_pass;         /*!< Adafruit IO key */
+  const char *mqttBrokerURL;         /*!< Adafruit IO key */
+
 private:
   bool _freshFS = false; /*!< True if filesystem was initialized by
                             WipperSnapper, False otherwise. */

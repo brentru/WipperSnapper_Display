@@ -60,8 +60,6 @@ public:
   */
   /**************************************************************************/
   Wippersnapper_ESP32() {
-    _ssid = "Transit";
-    _pass = "BigWindows";
     _mqtt_client = new WiFiClientSecure;
   }
 
@@ -221,7 +219,9 @@ public:
 
     if (WiFi.status() == WL_CONNECTED)
       return;
-
+    
+    Serial.print("Connecting to: ");
+    Serial.println(_ssid);
     if (strlen(_ssid) == 0) {
       _status = WS_SSID_INVALID;
     } else {

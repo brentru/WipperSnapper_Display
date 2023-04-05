@@ -43,10 +43,10 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        ui_helper.set_label_text("Connected to WiFi!");
+        //ui_helper.set_label_text("Connected to WiFi!");
+        ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         delay(5);
         lv_task_handler();
-        ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
       }
@@ -97,7 +97,7 @@ void runNetFSM() {
       break;
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
-      //ui_helper.set_label_text("Connecting to Adafruit.IO...");
+      ui_helper.set_label_text("Connecting to Adafruit.IO...");
       return;
       /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
             // Attempt to connect
@@ -150,7 +150,8 @@ void setup(void) {
   // parse secrets file
   // ui_helper.set_status_label("Validating secrets file...");
   ui_helper.set_label_text("Validating secrets file...");
-  // fileSystem->parseSecrets();
+  fileSystem->parseSecrets();
+  Wippersnapper_WiFi.set_ssid_pass(fileSystem->network_ssid, fileSystem->network_pass);
   // call task handler
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 

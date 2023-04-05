@@ -26,12 +26,6 @@
     defined(ARDUINO_ADAFRUIT_FEATHER_ESP32S3_REVTFT)
 #include "Wippersnapper_FS.h"
 
-// AIO credentials
-const char *username = "brubell"; /*!< Adafruit IO username */
-const char *key = "1234";         /*!< Adafruit IO key */
-const char *network_ssid = "WiFiSSID"; /*!< Adafruit IO username */
-const char *network_pass = "WiFiPASS";         /*!< Adafruit IO key */
-const char *mqttBrokerURL = "io.adafruit.com";         /*!< Adafruit IO key */
 
 // On-board external flash (QSPI or SPI) macros should already
 // defined in your board variant if supported
@@ -360,7 +354,7 @@ void Wippersnapper_FS::parseSecrets() {
     // TODO: Handle error here!
     Serial.println("ERROR: Could not open secrets.json file for reading!");
     // TODO, // buildScreenError("omg", "error");
-    fsHalt();
+    // fsHalt();
   }
 
   // check if we can deserialize the secrets.json file
@@ -372,7 +366,7 @@ void Wippersnapper_FS::parseSecrets() {
     writeToBootOut("ERROR: deserializeJson() failed with code\n");
     writeToBootOut(err.c_str());
     // buildScreenError("Error within secrets.json!", "Failed to deserialize, please check file's content again." );
-    fsHalt();
+    // fsHalt();
   }
 
   // Get io username
@@ -382,7 +376,7 @@ void Wippersnapper_FS::parseSecrets() {
     Serial.println("ERROR: invalid io_username value in secrets.json!");
     writeToBootOut("ERROR: invalid io_username value in secrets.json!\n");
     // buildScreenError("Error within secrets.json!", "Invalid (or missing) io_username value within secrets.json!" );
-    fsHalt();
+    // fsHalt();
   }
 
   // check if username is from templated json
@@ -391,7 +385,7 @@ void Wippersnapper_FS::parseSecrets() {
         "* ERROR: Default username found in secrets.json, please edit "
         "the secrets.json file and reset the board for the changes to take "
         "effect\n");
-    fsHalt();
+    // fsHalt();
   }
   username = io_username;
 
@@ -405,7 +399,7 @@ void Wippersnapper_FS::parseSecrets() {
   if (io_key == nullptr) {
     Serial.println("ERROR: invalid io_key value in secrets.json!");
     writeToBootOut("ERROR: invalid io_key value in secrets.json!\n");
-    fsHalt();
+    // fsHalt();
   }
   key = io_key;
 
@@ -432,7 +426,7 @@ void Wippersnapper_FS::parseSecrets() {
         "* ERROR: Default SSID found in secrets.json, please edit "
         "the secrets.json file and reset the board for the changes to take "
         "effect\n");
-    fsHalt();
+    // fsHalt();
   }
 
   // Parse WiFi Network Password
@@ -449,13 +443,13 @@ void Wippersnapper_FS::parseSecrets() {
                      "secrets.json!");
     writeToBootOut("ERROR: invalid network_type_wifi_password value in "
                    "secrets.json!\n");
-    fsHalt();
+    // fsHalt();
   }
   // error check if wifi password is from template
   if (strcmp(network_pass, "YOUR_WIFI_PASS_HERE") == 0) {
     writeToBootOut("Default SSID found in secrets.json, please edit "
                    "the secrets.json file and reset the board\n");
-    fsHalt();
+    // fsHalt();
   }
 
   writeToBootOut("WiFi Network: ");
