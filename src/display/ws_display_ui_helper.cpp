@@ -1,8 +1,7 @@
 #include "ws_display_ui_helper.h"
 
 
-
-static void my_event_cb(lv_event_t * event)
+static void label_status_cb(lv_event_t * event)
 {
     Serial.println("eventcb called!");
     const char** charPtr{ static_cast<const char**>(lv_event_get_param(event)) };
@@ -12,9 +11,8 @@ static void my_event_cb(lv_event_t * event)
 }
 
 // try propigating the event to the callback, for the app code
-void ws_display_ui_helper::set_label_text(const char *text) {
-  Serial.print("set_label_text (text): "); Serial.println(text);
-  // lblText = text;
+void ws_display_ui_helper::set_label_status(const char *text) {
+  Serial.print("set_label_status (text): "); Serial.println(text);
   lv_event_send(lblStatusText, LV_EVENT_REFRESH, &text);
 }
 
@@ -52,9 +50,9 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
 
 void ws_display_ui_helper::show_scr_load(){
   // adding loading screen image
-  lv_obj_t *icon = lv_img_create(lv_scr_act());
-  lv_img_set_src(icon, &ws_icon_100px);
-  lv_obj_align(icon, LV_ALIGN_TOP_MID, 0, 5);
+  imgWSLogo = lv_img_create(lv_scr_act());
+  lv_img_set_src(imgWSLogo, &ws_icon_100px);
+  lv_obj_align(imgWSLogo, LV_ALIGN_TOP_MID, 0, 5);
 
   // Icon bar
   const lv_coord_t iconBarXStart = 28;
@@ -83,7 +81,7 @@ void ws_display_ui_helper::show_scr_load(){
                iconBarXStart + (iconBarXSpaces * 1), iconBarYOffset);
 
   // Add symbol turtle 30px
-  lv_obj_t *labelTurtleBar = lv_label_create(lv_scr_act());
+  labelTurtleBar = lv_label_create(lv_scr_act());
   lv_label_set_text(labelTurtleBar, SYMBOL_TURTLE30PX);
 
   lv_style_init(&styleIconTurtle30px);
@@ -95,7 +93,7 @@ void ws_display_ui_helper::show_scr_load(){
   lv_obj_align(labelTurtleBar, LV_ALIGN_BOTTOM_LEFT, 106, iconBarYOffset);
 
   // Add cloud
-  lv_obj_t *labelCloudBar = lv_label_create(lv_scr_act());
+  labelCloudBar = lv_label_create(lv_scr_act());
   lv_label_set_text(labelCloudBar, SYMBOL_CLOUD);
 
   lv_style_init(&styleIconCloud);
@@ -106,7 +104,7 @@ void ws_display_ui_helper::show_scr_load(){
                iconBarYOffset);
 
   // Add circle checkmark
-  lv_obj_t *labelCircleBar = lv_label_create(lv_scr_act());
+  labelCircleBar = lv_label_create(lv_scr_act());
   lv_label_set_text(labelCircleBar, SYMBOL_CHECKMARK);
 
   lv_style_init(&styleIconCheckmark);
@@ -123,16 +121,57 @@ void ws_display_ui_helper::show_scr_load(){
   lv_obj_set_style_text_color(lblStatusText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblStatusText, "\0");
   lv_obj_align(lblStatusText, LV_ALIGN_BOTTOM_LEFT, 0, -5);
-  lv_obj_add_event_cb(lblStatusText, my_event_cb, LV_EVENT_REFRESH, NULL);
+  lv_obj_add_event_cb(lblStatusText, label_status_cb, LV_EVENT_REFRESH, NULL);
 }
 
-/* Sets the loading screen's text label */
-void ws_display_ui_helper::set_status_label(const char *text) {
-  lv_label_set_text(lblStatusText, text);
-  //lv_obj_refresh_style(lblStatusText, LV_PART_MAIN, LV_STYLE_PROP_ANY);
-  lv_obj_refresh_style(lblStatusText, LV_PART_ANY, LV_STYLE_PROP_ANY);
-  lv_task_handler();
+// Clear all icons from the loading screen
+void ws_display_ui_helper::clear_scr_load(){
+    lv_obj_del(imgWSLogo);
+    lv_obj_del(lblStatusText);
+    lv_obj_del(lblIconFile);
+    lv_obj_del(lblIconWiFi);
+    lv_obj_del(labelTurtleBar);
+    lv_obj_del(labelCloudBar);
+    lv_obj_del(labelCircleBar);
 }
 
-void ws_display_ui_helper::clear_scr_load(){}
-void ws_display_ui_helper::show_scr_error(){}
+void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblDesc){
+  // clear the active loading screen (for now, will eventually expand to take in a scr obj.)
+  clear_scr_load();
+
+  // Create error symbol
+  labelErrorTriangle = lv_label_create(lv_scr_act());
+  lv_label_set_text(labelErrorTriangle, SYMBOL_ERROR_TRIANGLE);
+
+  lv_style_init(&styleErrorTriangle);
+  lv_style_set_text_color(&styleErrorTriangle, lv_color_white());
+  lv_style_set_text_font(&styleErrorTriangle, &errorTriangle); 
+  lv_obj_add_style(labelErrorTriangle, &styleErrorTriangle, LV_PART_MAIN);
+  lv_obj_align(labelErrorTriangle, LV_ALIGN_TOP_MID, 0, 5);
+
+
+  // Add error label (large)
+  labelErrorHeader = lv_label_create(lv_scr_act());
+  lv_label_set_text(labelErrorHeader, lblError);
+
+  lv_style_init(&styleLabelErrorLarge);
+  lv_style_set_text_color(&styleLabelErrorLarge, lv_color_white());
+  lv_style_set_text_font(&styleLabelErrorLarge, &lv_font_montserrat_18); 
+  lv_obj_add_style(labelErrorHeader, &styleLabelErrorLarge, LV_PART_MAIN);
+  lv_obj_align(labelErrorHeader, LV_ALIGN_CENTER, 0, 10);
+
+
+  // Add error label (small)
+  labelErrorBody = lv_label_create(lv_scr_act());
+  lv_label_set_long_mode(labelErrorBody, LV_LABEL_LONG_WRAP);
+  lv_label_set_text(labelErrorBody, lblDesc);
+
+  lv_style_init(&styleLabelErrorSmall);
+  lv_style_set_text_color(&styleLabelErrorSmall, lv_color_white());
+  lv_style_set_text_font(&styleLabelErrorSmall, &lv_font_montserrat_12); 
+  lv_obj_add_style(labelErrorBody, &styleLabelErrorSmall, LV_PART_MAIN);
+  // set_width used by LABEL_LONG_WRAP
+  lv_obj_set_width(labelErrorBody, 220);
+  lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, 0, 65);
+
+}

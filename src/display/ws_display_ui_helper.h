@@ -3,16 +3,13 @@
 
 #include "ws_drv_display.h"
 
+// External Fonts
 #define SYMBOL_CODE "\xEF\x87\x89"
 #define SYMBOL_WIFI "\xEF\x87\xAB"
 #define SYMBOL_TURTLE30PX "\xEF\x9C\xA6"
 #define SYMBOL_CLOUD "\xEF\x83\x82"
 #define SYMBOL_CHECKMARK "\xEF\x81\x98"
 #define SYMBOL_ERROR_TRIANGLE "\xEF\x81\xB1"
-
-// images
-LV_IMG_DECLARE(ws_icon_100px);
-// FA fonts
 LV_FONT_DECLARE(errorTriangle);
 LV_FONT_DECLARE(file);
 LV_FONT_DECLARE(wifi_30px);
@@ -20,16 +17,34 @@ LV_FONT_DECLARE(cloud_30px);
 LV_FONT_DECLARE(turtle_30px);
 LV_FONT_DECLARE(circle_30px);
 
-// loading bar icons
-static lv_obj_t *lblIconFile, *lblIconWiFi;
+// Images
+LV_IMG_DECLARE(ws_icon_100px);
 
+/* Screen: Loading */
+// Objects
+static lv_obj_t *imgWSLogo;
+static lv_obj_t *lblIconFile;
+static lv_obj_t *lblIconWiFi;
+static lv_obj_t *labelTurtleBar;
+static lv_obj_t *labelCloudBar;
+static lv_obj_t *labelCircleBar;
 static lv_obj_t *lblStatusText;
+// Styles
+static lv_style_t styleIconFile;
+static lv_style_t styleIconWiFi;
+static lv_style_t styleIconTurtle30px;
+static lv_style_t styleIconCloud;
+static lv_style_t styleIconCheckmark;
 
-// styles used by the loading screen, need to be global or static
-static lv_style_t styleIconFile, styleIconWiFi, styleIconTurtle30px,
-    styleIconCloud, styleIconCheckmark;
-
-static const char *lblText;
+/* Screen: Error */
+// Objects
+static lv_obj_t *labelErrorTriangle;
+static lv_obj_t *labelErrorHeader;
+static lv_obj_t *labelErrorBody;
+// Styles
+static lv_style_t styleErrorTriangle;
+static lv_style_t styleLabelErrorLarge;
+static lv_style_t styleLabelErrorSmall;
 
 // used by set_load_bar_icon_complete()
 enum loadBarIcons {
@@ -48,11 +63,10 @@ public:
   void set_bg_black();
 
   void show_scr_load();
-  void set_load_bar_icon_complete(loadBarIcons iconType);
-  void set_status_label(const char *text);
-  void set_label_text(const char *text); // callback ui help?
   void clear_scr_load();
+  void set_load_bar_icon_complete(loadBarIcons iconType);
+  void set_label_status(const char *text); // callback ui help?
 
-  void show_scr_error();
+  void show_scr_error(const char *lblError, const char *lblDesc);
 };
 #endif // WS_DISPLAY_UI_HELPER_H
