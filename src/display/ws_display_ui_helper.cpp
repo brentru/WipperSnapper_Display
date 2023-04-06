@@ -158,7 +158,7 @@ void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblD
   lv_style_set_text_color(&styleLabelErrorLarge, lv_color_white());
   lv_style_set_text_font(&styleLabelErrorLarge, &lv_font_montserrat_18); 
   lv_obj_add_style(labelErrorHeader, &styleLabelErrorLarge, LV_PART_MAIN);
-  lv_obj_align(labelErrorHeader, LV_ALIGN_CENTER, 0, 10);
+  lv_obj_align(labelErrorHeader, LV_ALIGN_CENTER, 0, -5);
 
 
   // Add error label (small)
@@ -172,6 +172,6 @@ void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblD
   lv_obj_add_style(labelErrorBody, &styleLabelErrorSmall, LV_PART_MAIN);
   // set_width used by LABEL_LONG_WRAP
   lv_obj_set_width(labelErrorBody, 220);
-  lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, 0, 65);
+  lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, -3, 55);
 
 }
