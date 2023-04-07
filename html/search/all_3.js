@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['wippersnapper_5fesp32_2eh_3',['Wippersnapper_ESP32.h',['../_wippersnapper___e_s_p32_8h.html',1,'']]],
-  ['ws_5fdisplay_5fui_5fhelper_4',['ws_display_ui_helper',['../classws__display__ui__helper.html',1,'']]],
-  ['ws_5fdrv_5fdisplay_5',['ws_drv_display',['../classws__drv__display.html',1,'ws_drv_display'],['../classws__drv__display.html#a49a635d159904dfa0bc48dcd1bfbdfee',1,'ws_drv_display::ws_drv_display()']]],
-  ['ws_5fdrv_5fdisplay_2ecpp_6',['ws_drv_display.cpp',['../ws__drv__display_8cpp.html',1,'']]],
-  ['ws_5fdrv_5fdisplay_2eh_7',['ws_drv_display.h',['../ws__drv__display_8h.html',1,'']]]
+  ['set_5fbg_5fblack_3',['set_bg_black',['../classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79',1,'ws_display_ui_helper']]],
+  ['set_5flabel_5fstatus_4',['set_label_status',['../classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4',1,'ws_display_ui_helper']]],
+  ['set_5fload_5fbar_5ficon_5fcomplete_5',['set_load_bar_icon_complete',['../classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51',1,'ws_display_ui_helper']]],
+  ['setresolution_6',['setResolution',['../classws__drv__display.html#a7687afe4828273f24b37773bfe2d8895',1,'ws_drv_display']]],
+  ['show_5fscr_5ferror_7',['show_scr_error',['../classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75',1,'ws_display_ui_helper']]],
+  ['show_5fscr_5fload_8',['show_scr_load',['../classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13',1,'ws_display_ui_helper']]]
 ];

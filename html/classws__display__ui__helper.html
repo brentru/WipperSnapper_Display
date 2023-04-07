@@ -68,6 +68,11 @@ $(function() {
 <div class="title">ws_display_ui_helper Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Helps build and manage the LVGL objects and screens for the application code.  
+ <a href="classws__display__ui__helper.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="ws__display__ui__helper_8h_source.html">ws_display_ui_helper.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for ws_display_ui_helper:</div>
 <div class="dyncontent">
@@ -81,22 +86,25 @@ Inheritance diagram for ws_display_ui_helper:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ae4f1808608ffd788e349ae94de771b79"><td class="memItemLeft" align="right" valign="top"><a id="ae4f1808608ffd788e349ae94de771b79"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_bg_black</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79">set_bg_black</a> ()</td></tr>
+<tr class="memdesc:ae4f1808608ffd788e349ae94de771b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the screen's background to a black color. <br /></td></tr>
 <tr class="separator:ae4f1808608ffd788e349ae94de771b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a971a267aba0d230d7c9a609bd559ed13"><td class="memItemLeft" align="right" valign="top"><a id="a971a267aba0d230d7c9a609bd559ed13"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>show_scr_load</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13">show_scr_load</a> ()</td></tr>
+<tr class="memdesc:a971a267aba0d230d7c9a609bd559ed13"><td class="mdescLeft">&#160;</td><td class="mdescRight">Builds and displays the loading screen. <br /></td></tr>
 <tr class="separator:a971a267aba0d230d7c9a609bd559ed13"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9afaed92b8e6de31aa5b87cc58e615d8"><td class="memItemLeft" align="right" valign="top"><a id="a9afaed92b8e6de31aa5b87cc58e615d8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clear_scr_load</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8">clear_scr_load</a> ()</td></tr>
+<tr class="memdesc:a9afaed92b8e6de31aa5b87cc58e615d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Deletes all objects/styles off the load screen and frees their resources. <br /></td></tr>
 <tr class="separator:a9afaed92b8e6de31aa5b87cc58e615d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa37063cd4c304113e7f128daa5adbc51"><td class="memItemLeft" align="right" valign="top"><a id="aa37063cd4c304113e7f128daa5adbc51"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_load_bar_icon_complete</b> (loadBarIcons iconType)</td></tr>
+<tr class="memitem:aa37063cd4c304113e7f128daa5adbc51"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">set_load_bar_icon_complete</a> (loadBarIcons iconType)</td></tr>
+<tr class="memdesc:aa37063cd4c304113e7f128daa5adbc51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the color of an icon on the loading screen to green.  <a href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">More...</a><br /></td></tr>
 <tr class="separator:aa37063cd4c304113e7f128daa5adbc51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af65c0213180b7371ab4c1022b46e08f4"><td class="memItemLeft" align="right" valign="top"><a id="af65c0213180b7371ab4c1022b46e08f4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>set_label_status</b> (const char *text)</td></tr>
+<tr class="memitem:af65c0213180b7371ab4c1022b46e08f4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">set_label_status</a> (const char *text)</td></tr>
+<tr class="memdesc:af65c0213180b7371ab4c1022b46e08f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sets the text of the status label on the loading screen.  <a href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">More...</a><br /></td></tr>
 <tr class="separator:af65c0213180b7371ab4c1022b46e08f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a09e1f336b5185629240e096065352d75"><td class="memItemLeft" align="right" valign="top"><a id="a09e1f336b5185629240e096065352d75"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>show_scr_error</b> (const char *lblError, const char *lblDesc)</td></tr>
+<tr class="memitem:a09e1f336b5185629240e096065352d75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">show_scr_error</a> (const char *lblError, const char *lblDesc)</td></tr>
+<tr class="memdesc:a09e1f336b5185629240e096065352d75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build and display an error screen.  <a href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">More...</a><br /></td></tr>
 <tr class="separator:a09e1f336b5185629240e096065352d75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classws__drv__display"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classws__drv__display')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classws__drv__display.html">ws_drv_display</a></td></tr>
 <tr class="memitem:a49a635d159904dfa0bc48dcd1bfbdfee inherit pub_methods_classws__drv__display"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classws__drv__display.html#a49a635d159904dfa0bc48dcd1bfbdfee">ws_drv_display</a> (uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET)</td></tr>
@@ -117,6 +125,98 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memdesc:abdab293bba5c7a6b0d9b7d7282328904 inherit pub_methods_classws__drv__display"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables LVGL logging using the usb serial. Must be called AFTER calling Serial.begin(). <br /></td></tr>
 <tr class="separator:abdab293bba5c7a6b0d9b7d7282328904 inherit pub_methods_classws__drv__display"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Helps build and manage the LVGL objects and screens for the application code. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa37063cd4c304113e7f128daa5adbc51"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa37063cd4c304113e7f128daa5adbc51">&#9670;&nbsp;</a></span>set_load_bar_icon_complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ws_display_ui_helper::set_load_bar_icon_complete </td>
+          <td>(</td>
+          <td class="paramtype">loadBarIcons&#160;</td>
+          <td class="paramname"><em>iconType</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the color of an icon on the loading screen to green. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">iconType</td><td>Desired icon. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af65c0213180b7371ab4c1022b46e08f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af65c0213180b7371ab4c1022b46e08f4">&#9670;&nbsp;</a></span>set_label_status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ws_display_ui_helper::set_label_status </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>text</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Sets the text of the status label on the loading screen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">text</td><td>Desired text to write to the status label. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a09e1f336b5185629240e096065352d75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e1f336b5185629240e096065352d75">&#9670;&nbsp;</a></span>show_scr_error()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ws_display_ui_helper::show_scr_error </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>lblError</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>lblDesc</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build and display an error screen. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lblError</td><td>The generic error. </td></tr>
+    <tr><td class="paramname">lblDesc</td><td>Instructions or steps to resolve the error. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>src/display/<a class="el" href="ws__display__ui__helper_8h_source.html">ws_display_ui_helper.h</a></li>
 <li>src/display/ws_display_ui_helper.cpp</li>

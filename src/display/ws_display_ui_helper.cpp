@@ -1,6 +1,13 @@
 #include "ws_display_ui_helper.h"
 
 
+/**************************************************************************/
+/*!
+    @brief    Callback for updating the status label on the loading screen.
+    @param    event
+              Callback data.
+*/
+/**************************************************************************/
 static void label_status_cb(lv_event_t * event)
 {
     Serial.println("eventcb called!");
@@ -10,23 +17,42 @@ static void label_status_cb(lv_event_t * event)
     lv_label_set_text(lblStatusText, *charPtr);
 }
 
-// try propigating the event to the callback, for the app code
+/**************************************************************************/
+/*!
+    @brief    Sets the text of the status label on the loading screen.
+    @param    text
+              Desired text to write to the status label.
+*/
+/**************************************************************************/
 void ws_display_ui_helper::set_label_status(const char *text) {
   Serial.print("set_label_status (text): "); Serial.println(text);
   lv_event_send(lblStatusText, LV_EVENT_REFRESH, &text);
 }
 
+/**************************************************************************/
+/*!
+    @brief    Sets the screen's background to a black color.
+*/
+/**************************************************************************/
 void ws_display_ui_helper::set_bg_black(){
   lv_obj_set_style_bg_color(lv_scr_act(), lv_color_black(), LV_STATE_DEFAULT);
 }
 
-
+/**************************************************************************/
+/*!
+    @brief    Sets the color of an icon on the loading screen to green.
+    @param    iconType
+              Desired icon.
+*/
+/**************************************************************************/
 void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     lv_style_t *iconStyle;
     switch (iconType)
     {
     case loadBarIconFile:
+        // TODO: can we just call this below the switch, and use iconStyle ptr. instead?
         lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
+        // TODO: Do we need this? 
         lv_obj_refresh_style(lblIconFile, LV_PART_MAIN, LV_STYLE_PROP_ANY);
         break;
     case loadBarIconWifi:
@@ -45,9 +71,14 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
     default:
         return;
     }
-    lv_task_handler();
+    lv_task_handler(); // TODO: do we need this?
 }
 
+/**************************************************************************/
+/*!
+    @brief    Builds and displays the loading screen.
+*/
+/**************************************************************************/
 void ws_display_ui_helper::show_scr_load(){
   // adding loading screen image
   imgWSLogo = lv_img_create(lv_scr_act());
@@ -124,8 +155,14 @@ void ws_display_ui_helper::show_scr_load(){
   lv_obj_add_event_cb(lblStatusText, label_status_cb, LV_EVENT_REFRESH, NULL);
 }
 
-// Clear all icons from the loading screen
+/**************************************************************************/
+/*!
+    @brief    Deletes all objects/styles off the load screen and frees
+              their resources. 
+*/
+/**************************************************************************/
 void ws_display_ui_helper::clear_scr_load(){
+    // Delete all objects on the loading screen
     lv_obj_del(imgWSLogo);
     lv_obj_del(lblStatusText);
     lv_obj_del(lblIconFile);
@@ -133,8 +170,23 @@ void ws_display_ui_helper::clear_scr_load(){
     lv_obj_del(labelTurtleBar);
     lv_obj_del(labelCloudBar);
     lv_obj_del(labelCircleBar);
+    // Clear all properties from styles and free all allocated memory
+    lv_style_reset(&styleIconWiFi);
+    lv_style_reset(&styleIconCloud);
+    lv_style_reset(&styleIconTurtle30px);
+    lv_style_reset(&styleIconCheckmark);
 }
 
+
+/**************************************************************************/
+/*!
+    @brief    Build and display an error screen.
+    @param    lblError
+              The generic error.
+    @param    lblDesc
+              Instructions or steps to resolve the error.
+*/
+/**************************************************************************/
 void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblDesc){
   // clear the active loading screen (for now, will eventually expand to take in a scr obj.)
   clear_scr_load();

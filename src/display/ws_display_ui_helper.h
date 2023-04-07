@@ -55,6 +55,12 @@ enum loadBarIcons {
   loadBarIconCheckmark
 };
 
+/**************************************************************************/
+/*!
+    @brief    Helps build and manage the LVGL objects and screens for
+                the application code.
+*/
+/**************************************************************************/
 class ws_display_ui_helper : public ws_drv_display {
 public:
   ws_display_ui_helper(){};

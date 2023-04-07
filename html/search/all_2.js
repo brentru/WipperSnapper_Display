@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['setresolution_2',['setResolution',['../classws__drv__display.html#a7687afe4828273f24b37773bfe2d8895',1,'ws_drv_display']]]
+  ['enablelogging_2',['enableLogging',['../classws__drv__display.html#abdab293bba5c7a6b0d9b7d7282328904',1,'ws_drv_display']]]
 ];

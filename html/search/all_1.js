@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['enablelogging_1',['enableLogging',['../classws__drv__display.html#abdab293bba5c7a6b0d9b7d7282328904',1,'ws_drv_display']]]
+  ['clear_5fscr_5fload_1',['clear_scr_load',['../classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8',1,'ws_display_ui_helper']]]
 ];
