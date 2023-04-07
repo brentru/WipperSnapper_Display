@@ -24,8 +24,9 @@ typedef enum {
   FSM_NET_ESTABLISH_MQTT,
 } fsm_net_t;
 
-void loop2(void) {
-  lv_task_handler(); // Call LittleVGL task handler periodically
+void halt_and_tick(void) {
+  while (1)
+    lv_task_handler(); // Call LittleVGL task handler periodically
   delay(5);
 }
 
@@ -62,16 +63,20 @@ void runNetFSM() {
       Serial.println("Attempting to connect to WiFi");
       // TODO: Write SSID to here
       ui_helper.set_label_status("Connecting to WiFi: [SSID]...");
-      delay(5);
+      delay(10);
       lv_task_handler();
       // Perform a WiFi scan and check if SSID within
       // secrets.json is within the scanned SSIDs
       if (!Wippersnapper_WiFi.check_valid_ssid()) {
         Serial.println("ERROR: Unable to find WiFi network...");
-        delay(100000000);
+        ui_helper.show_scr_error(
+            "Network Error!",
+            "Unable to find your WiFi network, [SSID]. Please ensure the "
+            "network is 2.4GHz and you are in range.");
+        halt_and_tick();
       }
       // Attempt to connect to wireless network
-      maxAttempts = 5;
+      maxAttempts = 2;
       while (maxAttempts > 0) {
         // blink before we connect
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
@@ -85,8 +90,6 @@ void runNetFSM() {
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
         // did we connect?
         ws_status_t networkStatus = Wippersnapper_WiFi.networkStatus();
-        Serial.print("WiFi Status: ");
-        Serial.println(networkStatus);
         if (networkStatus == WS_NET_CONNECTED) {
           Serial.println("Connected..");
           digitalWrite(LED_BUILTIN, LOW);
@@ -94,14 +97,16 @@ void runNetFSM() {
         }
         maxAttempts--;
       }
-
       // Validate connection
       if (Wippersnapper_WiFi.networkStatus() != WS_NET_CONNECTED) {
-        Serial.println("Unable to connect, rebooting...");
-        // ui_helper.show_scr_error("Unable to connect to WiFi, rebooting in
-        // 5s...");
+        Serial.println("Unable to connect to WiFi, rebooting in 5s...");
+        ui_helper.show_scr_error(
+            "Network Error!",
+            "Unable to connect to [SSID]. Please check if your network is "
+            "2.4GHz and if the network password you entered in secrets.json is "
+            "correct.");
+        halt_and_tick();
       }
-
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_ESTABLISH_MQTT:
@@ -153,8 +158,8 @@ void setup(void) {
   // begin serial comm.
   Serial.begin(115200);
   tft_st7789.enableLogging();
-  /*   while (!Serial)
-      delay(10); */
+  while (!Serial)
+    delay(10);
 
   // parse secrets file
   ui_helper.set_label_status("Validating secrets file...");
@@ -164,15 +169,8 @@ void setup(void) {
   // call task handler
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 
-  // ui_helper.clear_scr_load();
-  ui_helper.show_scr_error("ERROR within secrets.json!",
-                           "1) Open the WIPPER drive on your computer.\n2) "
-                           "Change the value of IO_USERNAME to your Adafruit "
-                           "IO Username.\n3) Press RESET on your board.");
-  loop2();
-
   // run net FSM
-  // runNetFSM();
+  runNetFSM();
   Serial.println("going into application loop()");
 }
 

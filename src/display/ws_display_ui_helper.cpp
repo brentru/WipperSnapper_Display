@@ -185,7 +185,7 @@ void ws_display_ui_helper::clear_scr_load(){
     lv_obj_del(labelCloudBar);
     lv_obj_del(labelCircleBar);
     // Clear all properties from styles and free all allocated memory
-    lv_style_reset(&styleIconWiFi);
+     lv_style_reset(&styleIconWiFi);
     lv_style_reset(&styleIconCloud);
     lv_style_reset(&styleIconTurtle30px);
     lv_style_reset(&styleIconCheckmark);
@@ -202,6 +202,7 @@ void ws_display_ui_helper::clear_scr_load(){
 */
 /**************************************************************************/
 void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblDesc){
+  Serial.println("ws_display_ui_helper");
   // clear the active loading screen (for now, will eventually expand to take in a scr obj.)
   clear_scr_load();
 
@@ -239,5 +240,4 @@ void ws_display_ui_helper::show_scr_error(const char *lblError, const char *lblD
   // set_width used by LABEL_LONG_WRAP
   lv_obj_set_width(labelErrorBody, 220);
   lv_obj_align(labelErrorBody, LV_ALIGN_CENTER, -3, 55);
-
 }
