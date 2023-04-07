@@ -1,53 +1,67 @@
 {
-  "title": "Display Driver Definition",
-  "description": "A file detailing how a display will be interfaced with by Adafruit WipperSnapper",
-  "type": "object",
-  "properties": {
-    "dispDriver": {
-      "description": "The human-friendly name of the display driver (ST7789 | ST7735 | ILI9341 | HX8357).",
-      "type": "string",
-      "minLength": 3,
-      "maxLength": 10
-    },
-    "dispWidth": {
-      "description": "Display's horizontal width, in pixels.",
-      "type": "number"
-    },
-    "dispHeight": {
-      "description": "Display's vertical height, in pixels.",
-      "type": "number"
-    },
-    "dispRotation": {
-      "description": "Display's rotation, in degrees.",
-      "type": "number"
-    },
-    "dimensions": {
-      "type": "object",
-      "properties": {
-        "spiMode": {
-          "description" : "The SPI interface's mode, either: (1) Hardware SPI or (2) Software SPI",
-          "type": "number"
-        },
-        "pin_cs": {
-          "type": "number"
-        },
-        "pin_dc": {
-          "type": "number"
-        },
-        "pin_mosi": {
-          "type": "number"
-        },
-        "pin_sck": {
-          "type": "number"
-        },
-        "pin_rst": {
-          "type": "number"
-        }
-      }
-    }
-  }
+	"title": "Display Driver Definition",
+	"description": "A file detailing how a display will be interfaced with by Adafruit WipperSnapper",
+	"type": "object",
+	"properties": {
+		"dispDriver": {
+			"description": "The human-friendly name of the display driver (ST7789 | ST7735 | ILI9341 | HX8357).",
+			"type": "string",
+			"minLength": 3,
+			"maxLength": 10
+		},
+		"dispWidth": {
+			"description": "Display's horizontal width, in pixels.",
+			"type": "number"
+		},
+		"dispHeight": {
+			"description": "Display's vertical height, in pixels.",
+			"type": "number"
+		},
+		"dispRotation": {
+			"description": "Display's rotation, in degrees.",
+			"type": "number"
+		},
+		"dispSPI": {
+			"type": "object",
+			"properties": {
+				"spiMode": {
+					"description": "The SPI interface's mode, either: (1) Hardware SPI or (2) Software SPI",
+					"type": "number"
+				},
+				"pin_cs": {
+					"type": "number"
+				},
+				"pin_dc": {
+					"type": "number"
+				},
+				"pin_mosi": {
+					"type": "number"
+				},
+				"pin_sck": {
+					"type": "number"
+				},
+				"pin_rst": {
+					"type": "number"
+				}
+			}
+		},
+		"dispI2C": {
+			"type": "object",
+			"properties": {
+				"address": {
+					"description": "The I2C address, in hexadecimal.",
+					"type": "number"
+				},
+				"pin_scl": {
+					"type": "number"
+				},
+				"pin_sda": {
+					"type": "number"
+				},
+				"pin_rst": {
+					"type": "number"
+				}
+			}
+		}
+	}
 }
-
-
-
-

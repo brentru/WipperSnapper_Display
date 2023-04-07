@@ -1,0 +1,14 @@
+{
+	"dispDriver": "ST7789",
+	"dispWidth": 240,
+	"dispHeight": 240,
+	"dispRotation": 0,
+	"dispSPI": {
+		"spiMode": 1,
+		"pin_cs": 0,
+		"pin_dc": 0,
+		"pin_mosi": 0,
+		"pin_sck": 0,
+		"pin_rst": -1
+	}
+}
