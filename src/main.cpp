@@ -49,7 +49,7 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        // ui_helper.set_label_status("Connected to WiFi!");
+        // ui_helper.set_label_status("Connected to WiFi!"); // CAUSES A HANG
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         delay(5);
         lv_task_handler();
@@ -112,27 +112,29 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
       ui_helper.set_label_status("Connecting to Adafruit.IO...");
-      return;
-      /*       WS._mqtt->setKeepAliveInterval(WS_KEEPALIVE_INTERVAL_MS / 1000);
-            // Attempt to connect
-            maxAttempts = 5;
-            while (maxAttempts > 0) {
-              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-              int8_t mqttRC = WS._mqtt->connect();
-              if (mqttRC == WS_MQTT_CONNECTED) {
-                fsmNetwork = FSM_NET_CHECK_MQTT;
-                break;
-              }
-              Serial.println("Unable to connect to Adafruit IO MQTT, retrying in
-         3 seconds...");
-              // statusLEDBlink(WS_LED_STATUS_MQTT_CONNECTING);
-              delay(1800);
-              maxAttempts--;
-            }
-            if (fsmNetwork != FSM_NET_CHECK_MQTT)
-              haltError(
-                  "ERROR: Unable to connect to Adafruit.IO MQTT, rebooting
-         soon...", WS_LED_STATUS_MQTT_CONNECTING); */
+      Wippersnapper_WiFi.setupMQTTClient("testid", "username", "key");
+      Wippersnapper_WiFi.setMQTTKAT(5000 / 1000); // configure KAT interval
+      Serial.println("set KAT");
+      maxAttempts = 1; // set max connection attempts
+      while (maxAttempts > 0) {
+        int8_t mqttRC = Wippersnapper_WiFi.mqtt_client->connect();
+        // did we connect successfully?
+        if (mqttRC == 0) {
+          fsmNetwork = FSM_NET_CHECK_MQTT;
+          break;
+        }
+        Serial.println("Unable to connect, retrying");
+        delay(3000);
+        lv_task_handler();
+        maxAttempts--;
+      }
+      if (fsmNetwork != FSM_NET_CHECK_MQTT) {
+        // halt
+        // NOTE: This is still hanging... why!
+        Serial.println("Unable to connect to IO...");
+        ui_helper.show_scr_error("Connection Error", "Unable to connect to Adafruit IO. Please check your IO_USERNAME and IO_KEY in the secrets.json file.");
+        halt_and_tick();
+      }
       break;
     default:
       break;

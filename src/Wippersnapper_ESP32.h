@@ -54,13 +54,14 @@ typedef enum {
 class Wippersnapper_ESP32 {
 
 public:
+  Adafruit_MQTT *mqtt_client;
   /**************************************************************************/
   /*!
   @brief  Initializes the Adafruit IO class for ESP32 devices.
   */
   /**************************************************************************/
   Wippersnapper_ESP32() {
-    _mqtt_client = new WiFiClientSecure;
+    _wifi_client = new WiFiClientSecure;
   }
 
   /**************************************************************************/
@@ -69,8 +70,8 @@ public:
   */
   /**************************************************************************/
   ~Wippersnapper_ESP32() {
-    if (_mqtt_client)
-      delete _mqtt_client;
+    if (_wifi_client)
+      delete _wifi_client;
   }
 
   /********************************************************/
@@ -99,7 +100,7 @@ public:
   @brief  Sets the WiFi client's ssid and password.
   */
   /**********************************************************/
-/*   void set_ssid_pass() {
+/*    void set_ssid_pass() {
     _ssid = WS._network_ssid;
     _pass = WS._network_pass;
   } */
@@ -157,7 +158,7 @@ public:
   @note   On ESP32, the UID is the MAC address.
   */
   /********************************************************/
-/*   void getMacAddr() {
+/*    void getMacAddr() {
     uint8_t mac[6] = {0};
     WiFi.macAddress(mac);
     memcpy(WS._macAddr, mac, sizeof(mac));
@@ -170,18 +171,18 @@ public:
           MQTT client identifier
   */
   /********************************************************/
-/*   void setupMQTTClient(const char *clientID) {
-    if (WS._mqttBrokerURL == nullptr) {
-      WS._mqttBrokerURL = "io.adafruit.com";
-      _mqtt_client->setCACert(_aio_root_ca_prod);
-    } else {
-      _mqtt_client->setCACert(_aio_root_ca_staging);
-    }
+   void setupMQTTClient(const char *clientID, const char *IO_USERNAME, const char *IO_KEY) {
+    Serial.println("Setting up MQTT Client");
+    _wifi_client->setCACert(_aio_root_ca_prod);
+    Serial.println("Set Cert!");
+    mqtt_client = new Adafruit_MQTT_Client(_wifi_client, "io.adafruit.com", 8883, clientID, IO_USERNAME, IO_KEY);
+  }
 
-    WS._mqtt =
-        new Adafruit_MQTT_Client(_mqtt_client, WS._mqttBrokerURL, WS._mqtt_port,
-                                 clientID, WS._username, WS._key);
-  } */
+  void setMQTTKAT(uint16_t keepAlive) {
+    Serial.print("Setting MQTT KAT...");
+    mqtt_client->setKeepAliveInterval(keepAlive);
+    Serial.println("set!");
+  }
 
   /********************************************************/
   /*!
@@ -237,7 +238,7 @@ protected:
   const char *_ssid;              ///< WiFi SSID
   const char *_pass;              ///< WiFi password
   const char *_mqttBrokerURL;     ///< MQTT broker URL
-  WiFiClientSecure *_mqtt_client; ///< Pointer to a secure MQTT client object
+  WiFiClientSecure *_wifi_client; ///< Pointer to a secure MQTT client object
   ws_status_t _status;
 
   const char *_aio_root_ca_prod =
