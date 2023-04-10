@@ -1,14 +1,14 @@
 {
-	"dispDriver": "ST7789",
-	"dispWidth": 240,
-	"dispHeight": 240,
-	"dispRotation": 0,
-	"dispSPI": {
+	"driver": "ST7789",
+	"width": 240,
+	"height": 240,
+	"rotation": 0,
+	"spi": {
 		"spiMode": 1,
-		"pin_cs": 0,
-		"pin_dc": 0,
-		"pin_mosi": 0,
-		"pin_sck": 0,
-		"pin_rst": -1
+		"pinCs": 0,
+		"pinDc": 0,
+		"pinMosi": 0,
+		"pinSck": 0,
+		"pinRst": -1
 	}
 }

@@ -2,6 +2,7 @@
 	"title": "Display Driver Definition",
 	"description": "A file detailing how a display will be interfaced with by Adafruit WipperSnapper",
 	"type": "object",
+	"required": [ "dispDriver", "dispWidth", "dispHeight", "dispRotation"],
 	"properties": {
 		"dispDriver": {
 			"description": "The human-friendly name of the display driver (ST7789 | ST7735 | ILI9341 | HX8357).",
@@ -11,15 +12,21 @@
 		},
 		"dispWidth": {
 			"description": "Display's horizontal width, in pixels.",
-			"type": "number"
+			"type": "number",
+			"minLength": 32,
+			"maxLength": 750
 		},
 		"dispHeight": {
 			"description": "Display's vertical height, in pixels.",
-			"type": "number"
+			"type": "number",
+			"minLength": 32,
+			"maxLength": 750
 		},
 		"dispRotation": {
 			"description": "Display's rotation, in degrees.",
-			"type": "number"
+			"type": "number",
+			"minLength": 0,
+			"maxLength": 360
 		},
 		"dispSPI": {
 			"type": "object",
@@ -50,7 +57,7 @@
 			"properties": {
 				"address": {
 					"description": "The I2C address, in hexadecimal.",
-					"type": "number"
+					"type": "string"
 				},
 				"pin_scl": {
 					"type": "number"
