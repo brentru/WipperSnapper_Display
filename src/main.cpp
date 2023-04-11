@@ -39,6 +39,9 @@ void runNetFSM() {
   while (fsmNetwork != FSM_NET_CONNECTED) {
     switch (fsmNetwork) {
     case FSM_NET_CHECK_MQTT:
+      // everything seems working after the iram fix?
+      // ui_helper.set_label_status("Connected to MQTT!"); // CAUSES A HANG
+      // ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
       /*       if (mqtt->connected()) {
               // Serial.println("Connected to Adafruit IO!");
               fsmNetwork = FSM_NET_CONNECTED;
@@ -49,7 +52,7 @@ void runNetFSM() {
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        // ui_helper.set_label_status("Connected to WiFi!"); // CAUSES A HANG
+        ui_helper.set_label_status("Connected to WiFi!"); // CAUSES A HANG
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         delay(5);
         lv_task_handler();
@@ -76,7 +79,7 @@ void runNetFSM() {
         halt_and_tick();
       }
       // Attempt to connect to wireless network
-      maxAttempts = 2;
+      maxAttempts = 5;
       while (maxAttempts > 0) {
         // blink before we connect
         // statusLEDBlink(WS_LED_STATUS_WIFI_CONNECTING);
@@ -112,12 +115,17 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
       ui_helper.set_label_status("Connecting to Adafruit.IO...");
-      Wippersnapper_WiFi.setupMQTTClient("testid", "username", "key");
+      lv_task_handler();
+
+      // configure MQTT client
+      Wippersnapper_WiFi.setupMQTTClient("wsDisplayDevice",
+                                         fileSystem->username, fileSystem->key);
       Wippersnapper_WiFi.setMQTTKAT(5000 / 1000); // configure KAT interval
-      Serial.println("set KAT");
-      maxAttempts = 1; // set max connection attempts
+
+      maxAttempts = 5; // set max connection attempts
       while (maxAttempts > 0) {
         int8_t mqttRC = Wippersnapper_WiFi.mqtt_client->connect();
+        // mqttRC = 1;
         // did we connect successfully?
         if (mqttRC == 0) {
           fsmNetwork = FSM_NET_CHECK_MQTT;
@@ -132,7 +140,10 @@ void runNetFSM() {
         // halt
         // NOTE: This is still hanging... why!
         Serial.println("Unable to connect to IO...");
-        ui_helper.show_scr_error("Connection Error", "Unable to connect to Adafruit IO. Please check your IO_USERNAME and IO_KEY in the secrets.json file.");
+        ui_helper.show_scr_error(
+            "Connection Error",
+            "Unable to connect to Adafruit IO. Please check your IO_USERNAME "
+            "and IO_KEY in the secrets.json file.");
         halt_and_tick();
       }
       break;
@@ -168,6 +179,7 @@ void setup(void) {
   fileSystem->parseSecrets();
   Wippersnapper_WiFi.set_ssid_pass(fileSystem->network_ssid,
                                    fileSystem->network_pass);
+
   // call task handler
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
 
