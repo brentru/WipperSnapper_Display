@@ -95,6 +95,11 @@ public:
     }
   }
 
+  int8_t connectMQTT() {
+    int8_t connectRC = mqtt_client->connect();
+    return connectRC;
+  }
+
   /**********************************************************/
   /*!
   @brief  Sets the WiFi client's ssid and password.
@@ -175,7 +180,7 @@ public:
     Serial.println("Setting up MQTT Client");
     _wifi_client->setCACert(_aio_root_ca_prod);
     Serial.println("Set Cert!");
-    mqtt_client = new Adafruit_MQTT_Client(_wifi_client, "io.adafruit.com", 8883, clientID, IO_USERNAME, IO_KEY);
+    mqtt_client = new Adafruit_MQTT_Client(_wifi_client, "io.adafruit.com", 1883, clientID, IO_USERNAME, IO_KEY);
   }
 
   void setMQTTKAT(uint16_t keepAlive) {

@@ -54,7 +54,7 @@ void runNetFSM() {
         Serial.println("Connected to WiFi!");
         ui_helper.set_label_status("Connected to WiFi!"); // CAUSES A HANG
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
-        delay(5);
+        delay(10);
         lv_task_handler();
         fsmNetwork = FSM_NET_ESTABLISH_MQTT;
         break;
@@ -64,8 +64,7 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_NETWORK:
       // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
-      // TODO: Write SSID to here
-      ui_helper.set_label_status("Connecting to WiFi: [SSID]...");
+      ui_helper.set_label_status("Connecting to WiFi...");
       delay(10);
       lv_task_handler();
       // Perform a WiFi scan and check if SSID within
@@ -124,8 +123,10 @@ void runNetFSM() {
 
       maxAttempts = 5; // set max connection attempts
       while (maxAttempts > 0) {
-        int8_t mqttRC = Wippersnapper_WiFi.mqtt_client->connect();
-        // mqttRC = 1;
+        // TODO: This call does not seem to work, why?
+        int8_t mqttRC = Wippersnapper_WiFi.connectMQTT();
+        Serial.print("Connection RC: ");
+        Serial.println(mqttRC);
         // did we connect successfully?
         if (mqttRC == 0) {
           fsmNetwork = FSM_NET_CHECK_MQTT;
