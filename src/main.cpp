@@ -39,20 +39,23 @@ void runNetFSM() {
   while (fsmNetwork != FSM_NET_CONNECTED) {
     switch (fsmNetwork) {
     case FSM_NET_CHECK_MQTT:
+      Serial.println("checking MQTT");
       // everything seems working after the iram fix?
-      // ui_helper.set_label_status("Connected to MQTT!"); // CAUSES A HANG
-      // ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
-      /*       if (mqtt->connected()) {
-              // Serial.println("Connected to Adafruit IO!");
-              fsmNetwork = FSM_NET_CONNECTED;
-              return;
-            } */
+      if (Wippersnapper_WiFi.isMQTTConnected()) {
+        Serial.println("Connected to Adafruit IO!");
+        ui_helper.set_label_status("Connected to MQTT!");
+        ui_helper.set_load_bar_icon_complete(loadBarIconTurtle);
+        delay(10);
+        lv_task_handler();
+        fsmNetwork = FSM_NET_CONNECTED;
+        return;
+      }
       fsmNetwork = FSM_NET_CHECK_NETWORK;
       break;
     case FSM_NET_CHECK_NETWORK:
       if (Wippersnapper_WiFi.networkStatus() == WS_NET_CONNECTED) {
         Serial.println("Connected to WiFi!");
-        ui_helper.set_label_status("Connected to WiFi!"); // CAUSES A HANG
+        ui_helper.set_label_status("Connected to WiFi!");
         ui_helper.set_load_bar_icon_complete(loadBarIconWifi);
         delay(10);
         lv_task_handler();
@@ -114,16 +117,10 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
       ui_helper.set_label_status("Connecting to Adafruit.IO...");
+      delay(10);
       lv_task_handler();
-
-      // configure MQTT client
-      Wippersnapper_WiFi.setupMQTTClient("wsDisplayDevice",
-                                         fileSystem->username, fileSystem->key);
-      Wippersnapper_WiFi.setMQTTKAT(5000 / 1000); // configure KAT interval
-
       maxAttempts = 5; // set max connection attempts
       while (maxAttempts > 0) {
-        // TODO: This call does not seem to work, why?
         int8_t mqttRC = Wippersnapper_WiFi.connectMQTT();
         Serial.print("Connection RC: ");
         Serial.println(mqttRC);
@@ -183,6 +180,9 @@ void setup(void) {
 
   // call task handler
   ui_helper.set_load_bar_icon_complete(loadBarIconFile);
+
+  Wippersnapper_WiFi.setupMQTTClient("wsDisplayDevice", fileSystem->username,
+                                     fileSystem->key);
 
   // run net FSM
   runNetFSM();

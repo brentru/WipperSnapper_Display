@@ -61,7 +61,7 @@ public:
   */
   /**************************************************************************/
   Wippersnapper_ESP32() {
-    _wifi_client = new WiFiClientSecure;
+    _wifi_client = new WiFiClient;
   }
 
   /**************************************************************************/
@@ -93,6 +93,10 @@ public:
     } else {
       _pass = ssidPassword;
     }
+  }
+
+  bool isMQTTConnected(){
+    return mqtt_client->connected();
   }
 
   int8_t connectMQTT() {
@@ -178,15 +182,7 @@ public:
   /********************************************************/
    void setupMQTTClient(const char *clientID, const char *IO_USERNAME, const char *IO_KEY) {
     Serial.println("Setting up MQTT Client");
-    _wifi_client->setCACert(_aio_root_ca_prod);
-    Serial.println("Set Cert!");
     mqtt_client = new Adafruit_MQTT_Client(_wifi_client, "io.adafruit.com", 1883, clientID, IO_USERNAME, IO_KEY);
-  }
-
-  void setMQTTKAT(uint16_t keepAlive) {
-    Serial.print("Setting MQTT KAT...");
-    mqtt_client->setKeepAliveInterval(keepAlive);
-    Serial.println("set!");
   }
 
   /********************************************************/
@@ -243,7 +239,7 @@ protected:
   const char *_ssid;              ///< WiFi SSID
   const char *_pass;              ///< WiFi password
   const char *_mqttBrokerURL;     ///< MQTT broker URL
-  WiFiClientSecure *_wifi_client; ///< Pointer to a secure MQTT client object
+  WiFiClient *_wifi_client; ///< Pointer to a secure MQTT client object
   ws_status_t _status;
 
   const char *_aio_root_ca_prod =

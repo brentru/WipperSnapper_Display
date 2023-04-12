@@ -77,7 +77,9 @@ void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
         iconStyle = &styleIconCloud;
         break;
     case loadBarIconTurtle:
-        iconStyle = &styleIconTurtle30px;
+        lv_style_set_text_color(&styleIconTurtle30px, lv_palette_main(LV_PALETTE_GREEN));
+        lv_obj_refresh_style(labelTurtleBar, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+        break;
         break;
     case loadBarIconCheckmark:
         iconStyle = &styleIconCheckmark;
