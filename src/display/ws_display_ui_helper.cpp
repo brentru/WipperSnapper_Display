@@ -60,35 +60,36 @@ void ws_display_ui_helper::set_bg_black() {
 */
 /**************************************************************************/
 void ws_display_ui_helper::set_load_bar_icon_complete(loadBarIcons iconType) {
-  lv_style_t *iconStyle;
+  static lv_style_t *styleIcon;
+  static lv_obj_t *objIcon;
+
   switch (iconType) {
   case loadBarIconFile:
-    // TODO: can we just call this below the switch, and use iconStyle ptr.
-    // instead?
-    lv_style_set_text_color(&styleIconFile, lv_palette_main(LV_PALETTE_GREEN));
-    // TODO: Do we need this?
-    lv_obj_refresh_style(lblIconFile, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+    styleIcon = &styleIconFile;
+    objIcon = lblIconFile;
     break;
   case loadBarIconWifi:
-    lv_style_set_text_color(&styleIconWiFi, lv_palette_main(LV_PALETTE_GREEN));
-    lv_obj_refresh_style(lblIconWiFi, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+    styleIcon = &styleIconWiFi;
+    objIcon = lblIconWiFi;
     break;
   case loadBarIconCloud:
-    iconStyle = &styleIconCloud;
+    styleIcon = &styleIconCloud;
+    objIcon = labelCloudBar;
     break;
   case loadBarIconTurtle:
-    lv_style_set_text_color(&styleIconTurtle30px,
-                            lv_palette_main(LV_PALETTE_GREEN));
-    lv_obj_refresh_style(labelTurtleBar, LV_PART_MAIN, LV_STYLE_PROP_ANY);
-    break;
-    break;
-  case loadBarIconCheckmark:
-    iconStyle = &styleIconCheckmark;
+    styleIcon = &styleIconTurtle30px;
+    objIcon = labelTurtleBar;
     break;
   default:
+    Serial.println("ERROR: Undefined iconType!");
     return;
   }
-  lv_task_handler(); // TODO: do we need this?
+
+  // set icon's color and refresh
+  lv_style_set_text_color(styleIcon, lv_palette_main(LV_PALETTE_GREEN));
+  lv_obj_refresh_style(objIcon, LV_PART_MAIN, LV_STYLE_PROP_ANY);
+
+  lv_task_handler();
 }
 
 /**************************************************************************/
