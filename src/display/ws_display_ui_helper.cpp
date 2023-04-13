@@ -154,7 +154,7 @@ void ws_display_ui_helper::show_scr_load() {
   lv_obj_set_style_text_font(lblStatusText, &lv_font_montserrat_18, 0);
   lv_obj_set_style_text_color(lblStatusText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblStatusText, "\0");
-  lv_obj_align(lblStatusText, LV_ALIGN_BOTTOM_LEFT, 0, -5);
+  lv_obj_align(lblStatusText, LV_ALIGN_TOP_MID, 0, 35);
   lv_obj_add_event_cb(lblStatusText, label_status_cb, LV_EVENT_REFRESH, NULL);
 }
 
