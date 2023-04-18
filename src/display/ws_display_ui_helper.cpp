@@ -19,6 +19,21 @@ uint8_t _tipNum = 0;
 
 /**************************************************************************/
 /*!
+    @brief    Changes the tip text every 2 seconds.
+*/
+/**************************************************************************/
+void lv_timer_tips_cb(lv_timer_t *timer) {
+  Serial.println("Timer tips cb called");
+  // reset to avoid overflow
+  if (_tipNum == 4)
+    _tipNum = 0;
+
+  lv_label_set_text(lblTipText, loading_tips[_tipNum]);
+  _tipNum++;
+}
+
+/**************************************************************************/
+/*!
     @brief    Callback for updating the status label on the loading screen.
     @param    event
               Callback data.
@@ -30,26 +45,6 @@ static void label_status_cb(lv_event_t *event) {
   Serial.print("text: ");
   Serial.println(*charPtr);
   lv_label_set_text(lblStatusText, *charPtr);
-}
-
-/**************************************************************************/
-/*!
-    @brief    Sets and displays a new tip on the loading screen
-*/
-/**************************************************************************/
-static void lbl_tip_cb(lv_event_t *event) {
-  lv_label_set_text(lblTipText, loading_tips[_tipNum]);
-  _tipNum++; // next tip
-}
-
-/**************************************************************************/
-/*!
-    @brief    Rotates the tip label to the next tip for the loading screen.
-*/
-/**************************************************************************/
-void ws_display_ui_helper::rotateTipLbl() {
-  Serial.println("Rotating to the next tip...");
-  lv_event_send(lblTipText, LV_EVENT_REFRESH, NULL);
 }
 
 /**************************************************************************/
@@ -186,7 +181,7 @@ void ws_display_ui_helper::show_scr_load() {
   lv_obj_set_style_text_color(lblTipText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblTipText, "\0");
   lv_obj_align(lblTipText, LV_ALIGN_BOTTOM_LEFT, 0, -40);
-  lv_obj_add_event_cb(lblTipText, lbl_tip_cb, LV_EVENT_REFRESH, NULL);
+  timerLoadTips = lv_timer_create(lv_timer_tips_cb, 2000, NULL);
 }
 
 /**************************************************************************/

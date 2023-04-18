@@ -75,6 +75,8 @@ enum loadBarIcons {
 // holds all the loading tips
 static const char* loading_tips[4] = { WS_LOADING_TIP_1, WS_LOADING_TIP_2, WS_LOADING_TIP_3, WS_LOADING_TIP_4 };
 
+static lv_timer_t * timerLoadTips;
+
 /**************************************************************************/
 /*!
     @brief    Helps build and manage the LVGL objects and screens for
@@ -92,7 +94,6 @@ public:
   void clear_scr_load();
   void set_load_bar_icon_complete(loadBarIcons iconType);
   void set_label_status(const char *text); // callback ui help?
-  void rotateTipLbl();
 
   void show_scr_error(const char *lblError, const char *lblDesc);
 };
