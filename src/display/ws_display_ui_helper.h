@@ -94,6 +94,7 @@ public:
   void clear_scr_load();
   void set_load_bar_icon_complete(loadBarIcons iconType);
   void set_label_status(const char *text); // callback ui help?
+  void remove_tip_timer();
 
   void show_scr_error(const char *lblError, const char *lblDesc);
 };

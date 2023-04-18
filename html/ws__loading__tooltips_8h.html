@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Adafruit Library: src/display/ws_display_ui_helper.cpp File Reference</title>
+<title>Adafruit Library: src/display/ws_loading_tooltips.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -66,29 +66,31 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#func-members">Functions</a> &#124;
-<a href="#var-members">Variables</a>  </div>
+<a href="#define-members">Macros</a>  </div>
   <div class="headertitle">
-<div class="title">ws_display_ui_helper.cpp File Reference</div>  </div>
+<div class="title">ws_loading_tooltips.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &quot;<a class="el" href="ws__display__ui__helper_8h_source.html">ws_display_ui_helper.h</a>&quot;</code><br />
-</div><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
-Functions</h2></td></tr>
-<tr class="memitem:a7e219121a435c4001d87e2aa97b2cbb8"><td class="memItemLeft" align="right" valign="top"><a id="a7e219121a435c4001d87e2aa97b2cbb8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="ws__display__ui__helper_8cpp.html#a7e219121a435c4001d87e2aa97b2cbb8">lv_timer_tips_cb</a> (lv_timer_t *timer)</td></tr>
-<tr class="memdesc:a7e219121a435c4001d87e2aa97b2cbb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Changes the tip text every 2 seconds. <br /></td></tr>
-<tr class="separator:a7e219121a435c4001d87e2aa97b2cbb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="var-members"></a>
-Variables</h2></td></tr>
-<tr class="memitem:a9315d3693ef3dab55ca362e17aee4b6d"><td class="memItemLeft" align="right" valign="top"><a id="a9315d3693ef3dab55ca362e17aee4b6d"></a>
-uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>_tipNum</b> = 0</td></tr>
-<tr class="separator:a9315d3693ef3dab55ca362e17aee4b6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+
+<p><a href="ws__loading__tooltips_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:a8adbbfb54c1409accbdd10a8d488e032"><td class="memItemLeft" align="right" valign="top"><a id="a8adbbfb54c1409accbdd10a8d488e032"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WS_LOADING_TIP_1</b>&#160;&#160;&#160;&quot;Name components in IO using emojis to differentiate them!&quot;</td></tr>
+<tr class="separator:a8adbbfb54c1409accbdd10a8d488e032"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14653df154797daa80ccdfe661092da9"><td class="memItemLeft" align="right" valign="top"><a id="a14653df154797daa80ccdfe661092da9"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WS_LOADING_TIP_2</b>&#160;&#160;&#160;&quot;WipperSnapper now supports TFT displays on some boards (more to come).&quot;</td></tr>
+<tr class="separator:a14653df154797daa80ccdfe661092da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a660990ba37ce4113039144e1394d1f94"><td class="memItemLeft" align="right" valign="top"><a id="a660990ba37ce4113039144e1394d1f94"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WS_LOADING_TIP_3</b>&#160;&#160;&#160;&quot;Getting throttle errors? Try reducing a sensor's polling time.&quot;</td></tr>
+<tr class="separator:a660990ba37ce4113039144e1394d1f94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af79f7a2eebf25d357d4251998966ac79"><td class="memItemLeft" align="right" valign="top"><a id="af79f7a2eebf25d357d4251998966ac79"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>WS_LOADING_TIP_4</b>&#160;&#160;&#160;&quot;\&quot;Be quick, but don't hurry\&quot; - John Wooden &quot;</td></tr>
+<tr class="separator:af79f7a2eebf25d357d4251998966ac79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>LVGL "helper" class for WipperSnapper.</p>
+<div class="textblock"><p>Wippersnapper tooltips for the loading screen on a display</p>
 <p>Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!</p>
 <p>Copyright (c) Brent Rubell 2023 for Adafruit Industries.</p>
 <p>BSD license, all text here must be included in any redistribution. </p>

@@ -25,7 +25,7 @@ uint8_t _tipNum = 0;
 void lv_timer_tips_cb(lv_timer_t *timer) {
   Serial.println("Timer tips cb called");
   // reset to avoid overflow
-  if (_tipNum == 4)
+  if (_tipNum == sizeof(loading_tips) / sizeof(loading_tips[0]))
     _tipNum = 0;
 
   lv_label_set_text(lblTipText, loading_tips[_tipNum]);
@@ -58,6 +58,16 @@ void ws_display_ui_helper::set_label_status(const char *text) {
   Serial.print("set_label_status (text): ");
   Serial.println(text);
   lv_event_send(lblStatusText, LV_EVENT_REFRESH, &text);
+}
+
+/**************************************************************************/
+/*!
+    @brief    Pauses and deletes the loading tip callback timer.
+*/
+/**************************************************************************/
+void ws_display_ui_helper::remove_tip_timer() {
+  lv_timer_pause(timerLoadTips);
+  lv_timer_del(timerLoadTips);
 }
 
 /**************************************************************************/
@@ -181,7 +191,7 @@ void ws_display_ui_helper::show_scr_load() {
   lv_obj_set_style_text_color(lblTipText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblTipText, "\0");
   lv_obj_align(lblTipText, LV_ALIGN_BOTTOM_LEFT, 0, -40);
-  timerLoadTips = lv_timer_create(lv_timer_tips_cb, 2000, NULL);
+  timerLoadTips = lv_timer_create(lv_timer_tips_cb, 500, NULL);
 }
 
 /**************************************************************************/
@@ -204,6 +214,8 @@ void ws_display_ui_helper::clear_scr_load() {
   lv_style_reset(&styleIconCloud);
   lv_style_reset(&styleIconTurtle30px);
   lv_style_reset(&styleIconCheckmark);
+  // Stop the loading tip timer
+  remove_tip_timer();
 }
 
 /**************************************************************************/

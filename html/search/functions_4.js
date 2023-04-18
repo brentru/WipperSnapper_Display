@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['ws_5fdrv_5fdisplay_33',['ws_drv_display',['../classws__drv__display.html#a49a635d159904dfa0bc48dcd1bfbdfee',1,'ws_drv_display']]]
+  ['remove_5ftip_5ftimer_32',['remove_tip_timer',['../classws__display__ui__helper.html#a6f0b049102ecff5266246452815d8509',1,'ws_display_ui_helper']]]
 ];

@@ -74,85 +74,95 @@ $(function() {
 <div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define WS_DISPLAY_UI_HELPER_H</span></div>
 <div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
 <div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ws__drv__display_8h.html">ws_drv_display.h</a>&quot;</span></div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="comment">// External Fonts</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#define SYMBOL_CODE &quot;\xEF\x87\x89&quot;</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define SYMBOL_WIFI &quot;\xEF\x87\xAB&quot;</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define SYMBOL_TURTLE30PX &quot;\xEF\x9C\xA6&quot;</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define SYMBOL_CLOUD &quot;\xEF\x83\x82&quot;</span></div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define SYMBOL_CHECKMARK &quot;\xEF\x81\x98&quot;</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define SYMBOL_ERROR_TRIANGLE &quot;\xEF\x81\xB1&quot;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;LV_FONT_DECLARE(errorTriangle);</div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;LV_FONT_DECLARE(file);</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;LV_FONT_DECLARE(wifi_30px);</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;LV_FONT_DECLARE(cloud_30px);</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;LV_FONT_DECLARE(turtle_30px);</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;LV_FONT_DECLARE(circle_30px);</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160; </div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;<span class="comment">// Images</span></div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;LV_IMG_DECLARE(ws_icon_100px);</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160; </div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;<span class="comment">/* Screen: Loading */</span></div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">// Objects</span></div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="keyword">static</span> lv_obj_t *imgWSLogo;</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">static</span> lv_obj_t *lblIconFile;</div>
-<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> lv_obj_t *lblIconWiFi;</div>
-<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">static</span> lv_obj_t *labelTurtleBar;</div>
-<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">static</span> lv_obj_t *labelCloudBar;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">static</span> lv_obj_t *labelCircleBar;</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">static</span> lv_obj_t *lblStatusText;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="comment">// Styles</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> lv_style_t styleIconFile;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">static</span> lv_style_t styleIconWiFi;</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> lv_style_t styleIconTurtle30px;</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">static</span> lv_style_t styleIconCloud;</div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">static</span> lv_style_t styleIconCheckmark;</div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="comment">/* Screen: Error */</span></div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;<span class="comment">// Objects</span></div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorTriangle;</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorHeader;</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorBody;</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="comment">// Styles</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">static</span> lv_style_t styleErrorTriangle;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="keyword">static</span> lv_style_t styleLabelErrorLarge;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">static</span> lv_style_t styleLabelErrorSmall;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160; </div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="comment">// used by set_load_bar_icon_complete()</span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">enum</span> loadBarIcons {</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;  loadBarIconFile,</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;  loadBarIconWifi,</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  loadBarIconCloud,</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  loadBarIconTurtle,</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  loadBarIconCheckmark</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;};</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160; </div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="comment">/**************************************************************************/</span></div>
-<div class="line"><a name="l00079"></a><span class="lineno"><a class="line" href="classws__display__ui__helper.html">   79</a></span>&#160;<span class="keyword">class </span><a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a> : <span class="keyword">public</span> <a class="code" href="classws__drv__display.html">ws_drv_display</a> {</div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;  <a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a>(){};</div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  ~<a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a>(){};</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160; </div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79">set_bg_black</a>();</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160; </div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13">show_scr_load</a>();</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8">clear_scr_load</a>();</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">set_load_bar_icon_complete</a>(loadBarIcons iconType);</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">set_label_status</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *text); <span class="comment">// callback ui help?</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="preprocessor">#include &quot;<a class="code" href="ws__loading__tooltips_8h.html">ws_loading_tooltips.h</a>&quot;</span></div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="comment">// External Fonts</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#define SYMBOL_CODE &quot;\xEF\x87\x89&quot;</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="preprocessor">#define SYMBOL_WIFI &quot;\xEF\x87\xAB&quot;</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#define SYMBOL_TURTLE30PX &quot;\xEF\x9C\xA6&quot;</span></div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="preprocessor">#define SYMBOL_CLOUD &quot;\xEF\x83\x82&quot;</span></div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;<span class="preprocessor">#define SYMBOL_CHECKMARK &quot;\xEF\x81\x98&quot;</span></div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="preprocessor">#define SYMBOL_ERROR_TRIANGLE &quot;\xEF\x81\xB1&quot;</span></div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;LV_FONT_DECLARE(errorTriangle);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;LV_FONT_DECLARE(file);</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;LV_FONT_DECLARE(wifi_30px);</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;LV_FONT_DECLARE(cloud_30px);</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;LV_FONT_DECLARE(turtle_30px);</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;LV_FONT_DECLARE(circle_30px);</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160; </div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="comment">// Images</span></div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;LV_IMG_DECLARE(ws_icon_100px);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160; </div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="comment">/* Screen: Loading */</span></div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;<span class="comment">// Objects</span></div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">static</span> lv_obj_t *imgWSLogo;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">static</span> lv_obj_t *lblIconFile;</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;<span class="keyword">static</span> lv_obj_t *lblIconWiFi;</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160;<span class="keyword">static</span> lv_obj_t *labelTurtleBar;</div>
+<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;<span class="keyword">static</span> lv_obj_t *labelCloudBar;</div>
+<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;<span class="keyword">static</span> lv_obj_t *labelCircleBar;</div>
+<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;<span class="keyword">static</span> lv_obj_t *lblStatusText;</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;<span class="keyword">static</span> lv_obj_t *lblTipText;</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="comment">// Styles</span></div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="keyword">static</span> lv_style_t styleIconFile;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="keyword">static</span> lv_style_t styleIconWiFi;</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">static</span> lv_style_t styleIconTurtle30px;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="keyword">static</span> lv_style_t styleIconCloud;</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="keyword">static</span> lv_style_t styleIconCheckmark;</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160; </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="comment">/* Screen: Error */</span></div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;<span class="comment">// Objects</span></div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorTriangle;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorHeader;</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="keyword">static</span> lv_obj_t *labelErrorBody;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="comment">// Styles</span></div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="keyword">static</span> lv_style_t styleErrorTriangle;</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="keyword">static</span> lv_style_t styleLabelErrorLarge;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;<span class="keyword">static</span> lv_style_t styleLabelErrorSmall;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160; </div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="comment">// used by set_load_bar_icon_complete()</span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="keyword">enum</span> loadBarIcons {</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;  loadBarIconFile,</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;  loadBarIconWifi,</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;  loadBarIconCloud,</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;  loadBarIconTurtle,</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;  loadBarIconCheckmark</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;};</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160; </div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="comment">// holds all the loading tips</span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span>* loading_tips[4] = { WS_LOADING_TIP_1, WS_LOADING_TIP_2, WS_LOADING_TIP_3, WS_LOADING_TIP_4 };</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160; </div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">static</span> lv_timer_t * timerLoadTips;</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160; </div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;<span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="comment">/**************************************************************************/</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno"><a class="line" href="classws__display__ui__helper.html">   86</a></span>&#160;<span class="keyword">class </span><a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a> : <span class="keyword">public</span> <a class="code" href="classws__drv__display.html">ws_drv_display</a> {</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  <a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a>(){};</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;  ~<a class="code" href="classws__display__ui__helper.html">ws_display_ui_helper</a>(){};</div>
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160; </div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">show_scr_error</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *lblError, <span class="keyword">const</span> <span class="keywordtype">char</span> *lblDesc);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;};</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// WS_DISPLAY_UI_HELPER_H</span></div>
-<div class="ttc" id="aclassws__display__ui__helper_html"><div class="ttname"><a href="classws__display__ui__helper.html">ws_display_ui_helper</a></div><div class="ttdoc">Helps build and manage the LVGL objects and screens for the application code.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.h:79</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_a09e1f336b5185629240e096065352d75"><div class="ttname"><a href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">ws_display_ui_helper::show_scr_error</a></div><div class="ttdeci">void show_scr_error(const char *lblError, const char *lblDesc)</div><div class="ttdoc">Build and display an error screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:204</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_a971a267aba0d230d7c9a609bd559ed13"><div class="ttname"><a href="classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13">ws_display_ui_helper::show_scr_load</a></div><div class="ttdeci">void show_scr_load()</div><div class="ttdoc">Builds and displays the loading screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:96</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_a9afaed92b8e6de31aa5b87cc58e615d8"><div class="ttname"><a href="classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8">ws_display_ui_helper::clear_scr_load</a></div><div class="ttdeci">void clear_scr_load()</div><div class="ttdoc">Deletes all objects/styles off the load screen and frees their resources.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:178</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_aa37063cd4c304113e7f128daa5adbc51"><div class="ttname"><a href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">ws_display_ui_helper::set_load_bar_icon_complete</a></div><div class="ttdeci">void set_load_bar_icon_complete(loadBarIcons iconType)</div><div class="ttdoc">Sets the color of an icon on the loading screen to green.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:62</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_ae4f1808608ffd788e349ae94de771b79"><div class="ttname"><a href="classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79">ws_display_ui_helper::set_bg_black</a></div><div class="ttdeci">void set_bg_black()</div><div class="ttdoc">Sets the screen's background to a black color.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:51</div></div>
-<div class="ttc" id="aclassws__display__ui__helper_html_af65c0213180b7371ab4c1022b46e08f4"><div class="ttname"><a href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">ws_display_ui_helper::set_label_status</a></div><div class="ttdeci">void set_label_status(const char *text)</div><div class="ttdoc">Sets the text of the status label on the loading screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:41</div></div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79">set_bg_black</a>();</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13">show_scr_load</a>();</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8">clear_scr_load</a>();</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">set_load_bar_icon_complete</a>(loadBarIcons iconType);</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">set_label_status</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *text); <span class="comment">// callback ui help?</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a6f0b049102ecff5266246452815d8509">remove_tip_timer</a>();</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;  <span class="keywordtype">void</span> <a class="code" href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">show_scr_error</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *lblError, <span class="keyword">const</span> <span class="keywordtype">char</span> *lblDesc);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;};</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;<span class="preprocessor">#endif </span><span class="comment">// WS_DISPLAY_UI_HELPER_H</span></div>
+<div class="ttc" id="aclassws__display__ui__helper_html"><div class="ttname"><a href="classws__display__ui__helper.html">ws_display_ui_helper</a></div><div class="ttdoc">Helps build and manage the LVGL objects and screens for the application code.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.h:86</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_a09e1f336b5185629240e096065352d75"><div class="ttname"><a href="classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75">ws_display_ui_helper::show_scr_error</a></div><div class="ttdeci">void show_scr_error(const char *lblError, const char *lblDesc)</div><div class="ttdoc">Build and display an error screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:230</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_a6f0b049102ecff5266246452815d8509"><div class="ttname"><a href="classws__display__ui__helper.html#a6f0b049102ecff5266246452815d8509">ws_display_ui_helper::remove_tip_timer</a></div><div class="ttdeci">void remove_tip_timer()</div><div class="ttdoc">Pauses and deletes the loading tip callback timer.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:68</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_a971a267aba0d230d7c9a609bd559ed13"><div class="ttname"><a href="classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13">ws_display_ui_helper::show_scr_load</a></div><div class="ttdeci">void show_scr_load()</div><div class="ttdoc">Builds and displays the loading screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:127</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_a9afaed92b8e6de31aa5b87cc58e615d8"><div class="ttname"><a href="classws__display__ui__helper.html#a9afaed92b8e6de31aa5b87cc58e615d8">ws_display_ui_helper::clear_scr_load</a></div><div class="ttdeci">void clear_scr_load()</div><div class="ttdoc">Deletes all objects/styles off the load screen and frees their resources.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:203</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_aa37063cd4c304113e7f128daa5adbc51"><div class="ttname"><a href="classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51">ws_display_ui_helper::set_load_bar_icon_complete</a></div><div class="ttdeci">void set_load_bar_icon_complete(loadBarIcons iconType)</div><div class="ttdoc">Sets the color of an icon on the loading screen to green.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:89</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_ae4f1808608ffd788e349ae94de771b79"><div class="ttname"><a href="classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79">ws_display_ui_helper::set_bg_black</a></div><div class="ttdeci">void set_bg_black()</div><div class="ttdoc">Sets the screen's background to a black color.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:78</div></div>
+<div class="ttc" id="aclassws__display__ui__helper_html_af65c0213180b7371ab4c1022b46e08f4"><div class="ttname"><a href="classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4">ws_display_ui_helper::set_label_status</a></div><div class="ttdeci">void set_label_status(const char *text)</div><div class="ttdoc">Sets the text of the status label on the loading screen.</div><div class="ttdef"><b>Definition:</b> ws_display_ui_helper.cpp:57</div></div>
 <div class="ttc" id="aclassws__drv__display_html"><div class="ttname"><a href="classws__drv__display.html">ws_drv_display</a></div><div class="ttdoc">Display driver for LVGL and LVGL_Glue in WipperSnapper.</div><div class="ttdef"><b>Definition:</b> ws_drv_display.h:28</div></div>
 <div class="ttc" id="aws__drv__display_8h_html"><div class="ttname"><a href="ws__drv__display_8h.html">ws_drv_display.h</a></div></div>
+<div class="ttc" id="aws__loading__tooltips_8h_html"><div class="ttname"><a href="ws__loading__tooltips_8h.html">ws_loading_tooltips.h</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -45,6 +45,7 @@ void runNetFSM() {
         Serial.println("Connected to Adafruit IO!");
         ui_helper.set_label_status("Connected to MQTT!");
         ui_helper.set_load_bar_icon_complete(loadBarIconCloud);
+        ui_helper.remove_tip_timer();
         delay(10);
         lv_task_handler();
         fsmNetwork = FSM_NET_CONNECTED;
