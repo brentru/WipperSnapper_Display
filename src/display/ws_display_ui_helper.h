@@ -20,12 +20,11 @@
 #include "ws_loading_tooltips.h"
 
 // External Fonts
-#define SYMBOL_CODE "\xEF\x87\x89"
-#define SYMBOL_WIFI "\xEF\x87\xAB"
-#define SYMBOL_TURTLE30PX "\xEF\x9C\xA6"
-#define SYMBOL_CLOUD "\xEF\x83\x82"
-#define SYMBOL_CHECKMARK "\xEF\x81\x98"
-#define SYMBOL_ERROR_TRIANGLE "\xEF\x81\xB1"
+#define SYMBOL_CODE "\xEF\x87\x89"            ///< Symbol code for file icon
+#define SYMBOL_WIFI "\xEF\x87\xAB"            ///< Symbol code for WiFi icon
+#define SYMBOL_TURTLE30PX "\xEF\x9C\xA6"      ///< Symbol code for turtle icon
+#define SYMBOL_CLOUD "\xEF\x83\x82"           ///< Symbol code for cloud icon
+#define SYMBOL_ERROR_TRIANGLE "\xEF\x81\xB1"  ///< Symbol code for error triangle icon
 LV_FONT_DECLARE(errorTriangle);
 LV_FONT_DECLARE(file);
 LV_FONT_DECLARE(wifi_30px);
@@ -63,14 +62,13 @@ static lv_style_t styleErrorTriangle;
 static lv_style_t styleLabelErrorLarge;
 static lv_style_t styleLabelErrorSmall;
 
-// used by set_load_bar_icon_complete()
 enum loadBarIcons {
   loadBarIconFile,
   loadBarIconWifi,
   loadBarIconCloud,
   loadBarIconTurtle,
   loadBarIconCheckmark
-};
+}; ///< Icon names for use by set_load_bar_icon_complete
 
 // holds all the loading tips
 static const char* loading_tips[4] = { WS_LOADING_TIP_1, WS_LOADING_TIP_2, WS_LOADING_TIP_3, WS_LOADING_TIP_4 };

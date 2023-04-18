@@ -1,11 +1,14 @@
 var searchData=
 [
-  ['wippersnapper_5fesp32_2eh_11',['Wippersnapper_ESP32.h',['../_wippersnapper___e_s_p32_8h.html',1,'']]],
-  ['ws_5fdisplay_5fui_5fhelper_12',['ws_display_ui_helper',['../classws__display__ui__helper.html',1,'']]],
-  ['ws_5fdisplay_5fui_5fhelper_2ecpp_13',['ws_display_ui_helper.cpp',['../ws__display__ui__helper_8cpp.html',1,'']]],
-  ['ws_5fdisplay_5fui_5fhelper_2eh_14',['ws_display_ui_helper.h',['../ws__display__ui__helper_8h.html',1,'']]],
-  ['ws_5fdrv_5fdisplay_15',['ws_drv_display',['../classws__drv__display.html',1,'ws_drv_display'],['../classws__drv__display.html#a49a635d159904dfa0bc48dcd1bfbdfee',1,'ws_drv_display::ws_drv_display()']]],
-  ['ws_5fdrv_5fdisplay_2ecpp_16',['ws_drv_display.cpp',['../ws__drv__display_8cpp.html',1,'']]],
-  ['ws_5fdrv_5fdisplay_2eh_17',['ws_drv_display.h',['../ws__drv__display_8h.html',1,'']]],
-  ['ws_5floading_5ftooltips_2eh_18',['ws_loading_tooltips.h',['../ws__loading__tooltips_8h.html',1,'']]]
+  ['set_5fbg_5fblack_6',['set_bg_black',['../classws__display__ui__helper.html#ae4f1808608ffd788e349ae94de771b79',1,'ws_display_ui_helper']]],
+  ['set_5flabel_5fstatus_7',['set_label_status',['../classws__display__ui__helper.html#af65c0213180b7371ab4c1022b46e08f4',1,'ws_display_ui_helper']]],
+  ['set_5fload_5fbar_5ficon_5fcomplete_8',['set_load_bar_icon_complete',['../classws__display__ui__helper.html#aa37063cd4c304113e7f128daa5adbc51',1,'ws_display_ui_helper']]],
+  ['setresolution_9',['setResolution',['../classws__drv__display.html#a7687afe4828273f24b37773bfe2d8895',1,'ws_drv_display']]],
+  ['show_5fscr_5ferror_10',['show_scr_error',['../classws__display__ui__helper.html#a09e1f336b5185629240e096065352d75',1,'ws_display_ui_helper']]],
+  ['show_5fscr_5fload_11',['show_scr_load',['../classws__display__ui__helper.html#a971a267aba0d230d7c9a609bd559ed13',1,'ws_display_ui_helper']]],
+  ['symbol_5fcloud_12',['SYMBOL_CLOUD',['../ws__display__ui__helper_8h.html#a005ce1b42afb5654f470b62fbc177419',1,'ws_display_ui_helper.h']]],
+  ['symbol_5fcode_13',['SYMBOL_CODE',['../ws__display__ui__helper_8h.html#a8d270c4be3e764d93079dbbf584b0c16',1,'ws_display_ui_helper.h']]],
+  ['symbol_5ferror_5ftriangle_14',['SYMBOL_ERROR_TRIANGLE',['../ws__display__ui__helper_8h.html#a5bd91e2f6e5a755636f930b155f34d19',1,'ws_display_ui_helper.h']]],
+  ['symbol_5fturtle30px_15',['SYMBOL_TURTLE30PX',['../ws__display__ui__helper_8h.html#ab8acf22720da88384cc89d101d7ecd15',1,'ws_display_ui_helper.h']]],
+  ['symbol_5fwifi_16',['SYMBOL_WIFI',['../ws__display__ui__helper_8h.html#a9c728106dc4c14ca9dfab0997ca76fd9',1,'ws_display_ui_helper.h']]]
 ];

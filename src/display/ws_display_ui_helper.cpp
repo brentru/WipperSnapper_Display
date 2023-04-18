@@ -15,11 +15,13 @@
 
 #include "ws_display_ui_helper.h"
 
-uint8_t _tipNum = 0;
+uint8_t _tipNum = 0; ///< Current loading tip idx;
 
 /**************************************************************************/
 /*!
     @brief    Changes the tip text every 2 seconds.
+    @param    timer
+              The lv_timer tied to this callback, timerLoadTips.
 */
 /**************************************************************************/
 void lv_timer_tips_cb(lv_timer_t *timer) {

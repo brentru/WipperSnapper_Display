@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['begin_0',['begin',['../classws__drv__display.html#a57b0b5f130925b46764011e759cc252b',1,'ws_drv_display']]]
+  ['_5ftipnum_0',['_tipNum',['../ws__display__ui__helper_8cpp.html#a9315d3693ef3dab55ca362e17aee4b6d',1,'ws_display_ui_helper.cpp']]]
 ];
