@@ -15,6 +15,8 @@
 
 #include "ws_display_ui_helper.h"
 
+uint8_t _tipNum = 0;
+
 /**************************************************************************/
 /*!
     @brief    Callback for updating the status label on the loading screen.
@@ -28,6 +30,26 @@ static void label_status_cb(lv_event_t *event) {
   Serial.print("text: ");
   Serial.println(*charPtr);
   lv_label_set_text(lblStatusText, *charPtr);
+}
+
+/**************************************************************************/
+/*!
+    @brief    Sets and displays a new tip on the loading screen
+*/
+/**************************************************************************/
+static void lbl_tip_cb(lv_event_t *event) {
+  lv_label_set_text(lblTipText, loading_tips[_tipNum]);
+  _tipNum++; // next tip
+}
+
+/**************************************************************************/
+/*!
+    @brief    Rotates the tip label to the next tip for the loading screen.
+*/
+/**************************************************************************/
+void ws_display_ui_helper::rotateTipLbl() {
+  Serial.println("Rotating to the next tip...");
+  lv_event_send(lblTipText, LV_EVENT_REFRESH, NULL);
 }
 
 /**************************************************************************/
@@ -149,11 +171,22 @@ void ws_display_ui_helper::show_scr_load() {
   // Add status text label underneath the top loading bar
   lblStatusText = lv_label_create(lv_scr_act());
   lv_label_set_long_mode(lblStatusText, LV_LABEL_LONG_WRAP);
-  lv_obj_set_style_text_font(lblStatusText, &lv_font_montserrat_18, 0);
+  lv_obj_set_style_text_font(lblStatusText, &lv_font_montserrat_20, 0);
   lv_obj_set_style_text_color(lblStatusText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblStatusText, "\0");
   lv_obj_align(lblStatusText, LV_ALIGN_TOP_MID, 0, 50);
   lv_obj_add_event_cb(lblStatusText, label_status_cb, LV_EVENT_REFRESH, NULL);
+
+  // Add loading tooltip text label
+  lblTipText = lv_label_create(lv_scr_act());
+  lv_label_set_long_mode(lblTipText, LV_LABEL_LONG_WRAP);
+  lv_obj_set_style_text_font(lblTipText, &lv_font_montserrat_18, 0);
+  lv_obj_set_width(lblTipText,
+                   230); // TODO: This should match display width - 10px
+  lv_obj_set_style_text_color(lblTipText, lv_color_white(), LV_PART_MAIN);
+  lv_label_set_text(lblTipText, "\0");
+  lv_obj_align(lblTipText, LV_ALIGN_BOTTOM_LEFT, 0, -40);
+  lv_obj_add_event_cb(lblTipText, lbl_tip_cb, LV_EVENT_REFRESH, NULL);
 }
 
 /**************************************************************************/

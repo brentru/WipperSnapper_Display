@@ -45,6 +45,7 @@ void runNetFSM() {
         Serial.println("Connected to Adafruit IO!");
         ui_helper.set_label_status("Connected to MQTT!");
         ui_helper.set_load_bar_icon_complete(loadBarIconCloud);
+        ui_helper.rotateTipLbl();
         delay(10);
         lv_task_handler();
         fsmNetwork = FSM_NET_CONNECTED;
@@ -68,6 +69,7 @@ void runNetFSM() {
       // digitalWrite(LED_BUILTIN, HIGH);
       Serial.println("Attempting to connect to WiFi");
       ui_helper.set_label_status("Connecting to WiFi...");
+      ui_helper.rotateTipLbl();
       delay(10);
       lv_task_handler();
       // Perform a WiFi scan and check if SSID within
@@ -80,6 +82,11 @@ void runNetFSM() {
             "network is 2.4GHz and you are in range.");
         halt_and_tick();
       }
+
+      ui_helper.rotateTipLbl();
+      delay(10);
+      lv_task_handler();
+
       // Attempt to connect to wireless network
       maxAttempts = 5;
       while (maxAttempts > 0) {
@@ -117,6 +124,7 @@ void runNetFSM() {
     case FSM_NET_ESTABLISH_MQTT:
       Serial.println("Attempting to connect to Adafruit IO...");
       ui_helper.set_label_status("Connecting to Adafruit.IO...");
+      ui_helper.rotateTipLbl();
       delay(10);
       lv_task_handler();
       maxAttempts = 5; // set max connection attempts
