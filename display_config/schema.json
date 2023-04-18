@@ -1,34 +1,40 @@
 {
 	"title": "Display Driver Definition",
-	"description": "A file detailing how a display will be interfaced with by Adafruit WipperSnapper",
+	"description": "A file detailing how a display will interface with a device running Adafruit WipperSnapper",
 	"type": "object",
-	"required": [ "dispDriver", "dispWidth", "dispHeight", "dispRotation"],
+	"required": [ "driver", "width", "height", "rotation", "powerMode"],
 	"properties": {
-		"dispDriver": {
+		"driver": {
 			"description": "The human-friendly name of the display driver (ST7789 | ST7735 | ILI9341 | HX8357).",
 			"type": "string",
 			"minLength": 3,
 			"maxLength": 10
 		},
-		"dispWidth": {
+		"width": {
 			"description": "Display's horizontal width, in pixels.",
 			"type": "number",
 			"minLength": 32,
 			"maxLength": 750
 		},
-		"dispHeight": {
+		"height": {
 			"description": "Display's vertical height, in pixels.",
 			"type": "number",
 			"minLength": 32,
 			"maxLength": 750
 		},
-		"dispRotation": {
+		"rotation": {
 			"description": "Display's rotation, in degrees.",
 			"type": "number",
 			"minLength": 0,
 			"maxLength": 360
 		},
-		"dispSPI": {
+		"powerMode": {
+			"description": "Display's power-saving mode. (0, Display is ALWAYS ON | 1, Display OFF after the device connects to IO | 2, Display is ALWAYS OFF.",
+			"type": "number",
+			"minLength": 0,
+			"maxLength": 2
+		},
+		"SPI": {
 			"type": "object",
 			"properties": {
 				"spiMode": {
@@ -52,7 +58,7 @@
 				}
 			}
 		},
-		"dispI2C": {
+		"I2C": {
 			"type": "object",
 			"properties": {
 				"address": {

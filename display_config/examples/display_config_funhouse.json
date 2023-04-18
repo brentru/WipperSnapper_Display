@@ -3,6 +3,7 @@
 	"width": 240,
 	"height": 240,
 	"rotation": 0,
+	"powerMode": 0,
 	"spi": {
 		"spiMode": 1,
 		"pinCs": 0,
