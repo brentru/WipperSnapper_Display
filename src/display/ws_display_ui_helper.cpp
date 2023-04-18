@@ -101,9 +101,9 @@ void ws_display_ui_helper::show_scr_load() {
 
   // Icon bar
   const lv_coord_t iconBarXStart =
-      5; // Coordinate where the icon bar begins, on the X axis
-  const lv_coord_t iconBarYOffset = 0; // Vertical offset from top of screen
-  const int iconBarXSpaces = 10;       // Horizontal spaces between icons
+      20; // Coordinate where the icon bar begins, on the X axis
+  const lv_coord_t iconBarYOffset = 5; // Vertical offset from top of screen
+  const int iconBarXSpaces = 40;       // Horizontal spaces between icons
 
   // add symbol_code (30px) to represent settings.json
   lblIconFile = lv_label_create(lv_scr_act());
@@ -122,8 +122,8 @@ void ws_display_ui_helper::show_scr_load() {
   lv_style_set_text_color(&styleIconWiFi, lv_palette_main(LV_PALETTE_GREY));
   lv_style_set_text_font(&styleIconWiFi, &wifi_30px);
   lv_obj_add_style(lblIconWiFi, &styleIconWiFi, LV_PART_MAIN);
-  lv_obj_align(lblIconWiFi, LV_ALIGN_TOP_LEFT,
-               (iconBarXStart * iconBarXSpaces) * 1, iconBarYOffset);
+  lv_obj_align(lblIconWiFi, LV_ALIGN_TOP_LEFT, iconBarXStart + iconBarXSpaces,
+               iconBarYOffset);
 
   // Add cloud
   labelCloudBar = lv_label_create(lv_scr_act());
@@ -133,10 +133,9 @@ void ws_display_ui_helper::show_scr_load() {
   lv_style_set_text_color(&styleIconCloud, lv_palette_main(LV_PALETTE_GREY));
   lv_style_set_text_font(&styleIconCloud, &cloud_30px);
   lv_obj_add_style(labelCloudBar, &styleIconCloud, LV_PART_MAIN);
-  lv_obj_align(labelCloudBar, LV_ALIGN_TOP_LEFT,
-               (iconBarXStart * iconBarXSpaces) * 2, iconBarYOffset);
+  lv_obj_align(labelCloudBar, LV_ALIGN_TOP_LEFT, 120, iconBarYOffset);
 
-  // Add symbol turtle 30px
+  // Add turtle
   labelTurtleBar = lv_label_create(lv_scr_act());
   lv_label_set_text(labelTurtleBar, SYMBOL_TURTLE30PX);
 
@@ -145,8 +144,7 @@ void ws_display_ui_helper::show_scr_load() {
                           lv_palette_main(LV_PALETTE_GREY));
   lv_style_set_text_font(&styleIconTurtle30px, &turtle_30px);
   lv_obj_add_style(labelTurtleBar, &styleIconTurtle30px, LV_PART_MAIN);
-  lv_obj_align(labelTurtleBar, LV_ALIGN_TOP_LEFT,
-               (iconBarXStart * iconBarXSpaces) * 3, iconBarYOffset);
+  lv_obj_align(labelTurtleBar, LV_ALIGN_TOP_LEFT, 180, iconBarYOffset);
 
   // Add status text label underneath the top loading bar
   lblStatusText = lv_label_create(lv_scr_act());
@@ -154,7 +152,7 @@ void ws_display_ui_helper::show_scr_load() {
   lv_obj_set_style_text_font(lblStatusText, &lv_font_montserrat_18, 0);
   lv_obj_set_style_text_color(lblStatusText, lv_color_white(), LV_PART_MAIN);
   lv_label_set_text(lblStatusText, "\0");
-  lv_obj_align(lblStatusText, LV_ALIGN_TOP_MID, 0, 35);
+  lv_obj_align(lblStatusText, LV_ALIGN_TOP_MID, 0, 50);
   lv_obj_add_event_cb(lblStatusText, label_status_cb, LV_EVENT_REFRESH, NULL);
 }
 
