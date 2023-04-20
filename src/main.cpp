@@ -175,6 +175,9 @@ void setup(void) {
   while (!Serial)
     delay(10);
 
+  // parse display configuration from filesystem
+  // fileSystem->parseDisplayConfig();
+
   // parse secrets file
   ui_helper.set_label_status("Validating secrets file...");
   fileSystem->parseSecrets();
