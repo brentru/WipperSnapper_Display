@@ -501,7 +501,8 @@ displayConfig Wippersnapper_FS::parseDisplayConfig() {
       file.close();
   } else {
       Serial.println("ERROR could not find display_config.json!");
-      // TODO: Halt? Do we need to pull this out externally to check a bool?
+      while (1)
+        yield();
   }
 
   // let's parse the deserialized array into a displayConfig struct!
