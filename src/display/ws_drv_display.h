@@ -19,6 +19,22 @@
 #include <Adafruit_ST7789.h>
 #include <Arduino.h>
 #include <lvgl.h>
+#include <ArduinoJson.h>
+
+struct displayConfig {
+  char driver[10];
+  int width;
+  int height;
+  int rotation;
+  bool isSPI;
+  bool isI2C;
+  uint8_t pinCS;
+  uint8_t pinDC;
+  uint8_t pinMOSI;
+  uint8_t pinSCK;
+  uint8_t pinRST;
+};
+
 
 /***************************************************************************/
 /*!

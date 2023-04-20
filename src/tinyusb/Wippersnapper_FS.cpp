@@ -491,6 +491,47 @@ void Wippersnapper_FS::writeToBootOut(PGM_P str) {
   }
 }
 
+displayConfig Wippersnapper_FS::parseDisplayConfig() {
+  DynamicJsonDocument doc(512);
+  DeserializationError error;
+
+  File32 file = wipperFatFs.open("/display_config.json", FILE_READ);
+  if (file) {
+      error = deserializeJson(doc, file);
+      file.close();
+  } else {
+      Serial.println("ERROR could not find display_config.json!");
+      // TODO: Halt? Do we need to pull this out externally to check a bool?
+  }
+
+  // let's parse the deserialized array into a displayConfig struct!
+  displayConfig displayFile;
+  // generic fields
+  strcpy(displayFile.driver, doc["driver"]);
+  displayFile.height = doc["width"];
+  displayFile.height = doc["height"];
+  displayFile.rotation = doc["rotation"];
+
+  // display driver uses SPI, copy all the fields from the json array
+  if (!doc["isSPI"] == true) {
+    displayFile.isSPI = doc["isSPI"];
+    displayFile.pinCS = doc["pinCs"];
+    displayFile.pinDC = doc["pinDc"];
+    displayFile.pinMOSI = doc["pinMosi"];
+    displayFile.pinSCK = doc["pinSck"];
+    displayFile.pinRST = doc["pinRst"];
+  } else if (!doc["isI2C"] == true) {
+    Serial.println("I2C display drivers are not implemented yet!");
+    // TODO: Halt?
+  } else {
+    Serial.println("ERROR: Display device lacks a hardware interface, failing out...");
+    // TODO: Halt?
+  }
+
+  return displayFile;
+}
+
+
 /**************************************************************************/
 /*!
     @brief    Halts execution and blinks the status LEDs yellow.

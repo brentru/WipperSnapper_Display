@@ -22,6 +22,7 @@
 // using f_mkfs() for formatting
 #include "fatfs/ff.h" // NOTE: This should be #included before fatfs/diskio.h!!!
 #include "fatfs/diskio.h"
+#include "display/ws_drv_display.h"
 
 // #include "display/ws_display_ui_helper.h"
 
@@ -59,6 +60,8 @@ public:
   void fsHalt();
 
   void parseSecrets();
+
+  displayConfig parseDisplayConfig();
 
   // NOTE: calculated capacity with maximum
   // length of usernames/passwords/tokens
