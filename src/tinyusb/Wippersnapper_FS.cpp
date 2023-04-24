@@ -503,7 +503,9 @@ void Wippersnapper_FS::createDisplayConfig() {
   // Write the file out
   File32 displayFile = wipperFatFs.open("/display_config.json", FILE_WRITE);
   serializeJsonPretty(doc, displayFile);
+  displayFile.flush();
   displayFile.close();
+  delay(2500);
 }
 
 displayConfig Wippersnapper_FS::parseDisplayConfig() {
@@ -517,8 +519,7 @@ displayConfig Wippersnapper_FS::parseDisplayConfig() {
   }
 
   File32 file = wipperFatFs.open("/display_config.json", FILE_READ);
-  if (!file) {
-    // Parsing..
+  if (file) {
     error = deserializeJson(doc, file);
     file.close();
   } else {
