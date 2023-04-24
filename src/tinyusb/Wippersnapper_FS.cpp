@@ -483,7 +483,7 @@ void Wippersnapper_FS::writeToBootOut(PGM_P str) {
 }
 
 displayConfig Wippersnapper_FS::parseDisplayConfig() {
-  DynamicJsonDocument doc(512);
+  StaticJsonDocument<384> doc;
   DeserializationError error;
 
   File32 file = wipperFatFs.open("/display_config.json", FILE_READ);

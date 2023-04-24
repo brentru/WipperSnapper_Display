@@ -23,25 +23,6 @@
 /**************************************************************************/
 static void my_log_cb(const char *buf) { Serial.printf(buf); }
 
-// TODO: Deprecate this method
-/**************************************************************************/
-/*!
-    @brief    Creates a new WipperSnapper display driver object.
-    @param    TFT_CS
-              TFT CS pin.
-    @param    TFT_DC
-              TFT DC pin.
-    @param    TFT_RESET
-              TFT RESET pin.
-*/
-/**************************************************************************/
-ws_drv_display::ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC,
-                               uint8_t TFT_RESET) {
-  // TODO: We'll probably need to detect tft display types somehow, not just
-  // ST7789
-  _tft_st7789 = new Adafruit_ST7789(TFT_CS, TFT_DC, TFT_RESET);
-}
-
 /**************************************************************************/
 /*!
     @brief    Creates a new WipperSnapper display driver object from a
@@ -69,7 +50,11 @@ ws_drv_display::ws_drv_display(displayConfig config) {
     @brief    Deletes a new WipperSnapper display driver object.
 */
 /**************************************************************************/
-ws_drv_display::~ws_drv_display() { delete _tft_st7789; }
+ws_drv_display::~ws_drv_display() {
+  if (_tft_st7789 != nullptr) {
+    delete _tft_st7789;
+  }
+}
 
 /**************************************************************************/
 /*!

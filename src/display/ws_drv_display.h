@@ -44,7 +44,6 @@ class ws_drv_display {
 public:
   ws_drv_display(){};
   ws_drv_display(displayConfig config);
-  ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC, uint8_t TFT_RESET);
   ~ws_drv_display();
 
   bool begin();
