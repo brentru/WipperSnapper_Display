@@ -61,6 +61,7 @@ public:
 
   void parseSecrets();
 
+  void createDisplayConfig();
   displayConfig parseDisplayConfig();
 
   // NOTE: calculated capacity with maximum

@@ -482,16 +482,48 @@ void Wippersnapper_FS::writeToBootOut(PGM_P str) {
   }
 }
 
+void Wippersnapper_FS::createDisplayConfig() {
+  StaticJsonDocument<256> doc;
+
+#ifdef ARDUINO_FUNHOUSE_ESP32S2
+  doc["driver"] = "ST7789";
+  doc["width"] = 240;
+  doc["height"] = 240;
+  doc["rotation"] = 0;
+  doc["powerMode"] = 0;
+  JsonObject spi = doc.createNestedObject("spi");
+  spi["spiMode"] = 1;
+  spi["pinCs"] = 40;
+  spi["pinDc"] = 39;
+  spi["pinMosi"] = 0;
+  spi["pinSck"] = 0;
+  spi["pinRst"] = 41;
+#endif
+
+  // Write the file out
+  File32 displayFile = wipperFatFs.open("/display_config.json", FILE_WRITE);
+  serializeJsonPretty(doc, displayFile);
+  displayFile.close();
+}
+
 displayConfig Wippersnapper_FS::parseDisplayConfig() {
   StaticJsonDocument<384> doc;
   DeserializationError error;
 
+  if (!wipperFatFs.exists("/display_config.json")) {
+    Serial.print("Could not find display_config.json, generating...");
+    createDisplayConfig();
+    Serial.println("done!");
+  }
+
   File32 file = wipperFatFs.open("/display_config.json", FILE_READ);
-  if (file) {
+  if (!file) {
+    // Parsing..
     error = deserializeJson(doc, file);
     file.close();
   } else {
-    Serial.println("ERROR could not find display_config.json!");
+    Serial.println(
+        "FATAL ERROR: Unable to open display_config.json for parsing");
     while (1)
       yield();
   }
