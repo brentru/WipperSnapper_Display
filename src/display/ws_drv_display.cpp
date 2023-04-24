@@ -61,6 +61,7 @@ ws_drv_display::ws_drv_display(displayConfig config) {
   }
 
   setResolution(config.width, config.height);
+  setRotation(config.rotation);
 }
 
 /**************************************************************************/
@@ -115,10 +116,9 @@ bool ws_drv_display::begin() {
   // initialize display driver and lvgl_glue
   if (_tft_st7789 != nullptr) {
     _tft_st7789->init(_displayWidth, _displayHeight);
-    _tft_st7789->setRotation(0);
     status = _glue.begin(_tft_st7789);
   } else {
-    Serial.println("ERROR: Unable to initialize display driver!");
+    Serial.println("ERROR: Unable to initialize the display driver!");
     return false;
   }
 
