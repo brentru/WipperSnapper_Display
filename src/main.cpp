@@ -7,7 +7,7 @@
 #include "tinyusb/Wippersnapper_FS.h"
 Wippersnapper_ESP32 Wippersnapper_WiFi;
 
-ws_drv_display tft_st7789(TFT_CS, TFT_DC, TFT_RESET);
+ws_drv_display *tft_st7789;
 ws_display_ui_helper ui_helper;
 
 Wippersnapper_FS *fileSystem = nullptr;
@@ -156,8 +156,22 @@ void runNetFSM() {
 
 void setup(void) {
 
-  tft_st7789.setResolution(240, 240);
-  tft_st7789.begin();
+  // init USB-MSC and FS
+  fileSystem = new Wippersnapper_FS();
+
+  // begin serial comm.
+  Serial.begin(115200);
+  while (!Serial)
+    delay(10);
+  delay(100);
+
+  // parse display configuration from filesystem
+  displayConfig config = fileSystem->parseDisplayConfig();
+  tft_st7789 = new ws_drv_display(config);
+  if (!tft_st7789->begin())
+    Serial.println("ERROR: Unable to initialize driver and LVGL");
+
+  tft_st7789->enableLogging();
 
   // set screen background to black
   ui_helper.set_bg_black();
@@ -165,18 +179,6 @@ void setup(void) {
   ui_helper.show_scr_load();
   // call task handler
   lv_task_handler();
-
-  // init USB-MSC and FS
-  fileSystem = new Wippersnapper_FS();
-
-  // begin serial comm.
-  Serial.begin(115200);
-  tft_st7789.enableLogging();
-  while (!Serial)
-    delay(10);
-
-  // parse display configuration from filesystem
-  displayConfig config = fileSystem->parseDisplayConfig();
 
   // parse secrets file
   ui_helper.set_label_status("Validating secrets file...");

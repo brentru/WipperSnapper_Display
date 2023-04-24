@@ -53,6 +53,7 @@ ws_drv_display::ws_drv_display(uint8_t TFT_CS, uint8_t TFT_DC,
 ws_drv_display::ws_drv_display(displayConfig config) {
   // let's dynamically create the display driver from the configuration file
   if (strcmp(config.driver, "ST7789") == 0) {
+    Serial.println("Configuring the Adafruit_ST7789 driver");
     _tft_st7789 =
         new Adafruit_ST7789(config.pinCS, config.pinDC, config.pinRST);
   } else {
@@ -114,7 +115,7 @@ bool ws_drv_display::begin() {
   // initialize display driver and lvgl_glue
   if (_tft_st7789 != nullptr) {
     _tft_st7789->init(_displayWidth, _displayHeight);
-    _tft_st7789->setRotation(_displayRotationMode);
+    _tft_st7789->setRotation(0);
     status = _glue.begin(_tft_st7789);
   } else {
     Serial.println("ERROR: Unable to initialize display driver!");

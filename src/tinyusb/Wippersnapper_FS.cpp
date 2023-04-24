@@ -26,7 +26,6 @@
     defined(ARDUINO_ADAFRUIT_FEATHER_ESP32S3_REVTFT)
 #include "Wippersnapper_FS.h"
 
-
 // On-board external flash (QSPI or SPI) macros should already
 // defined in your board variant if supported
 // - EXTERNAL_FLASH_USE_QSPI
@@ -99,20 +98,19 @@ Wippersnapper_FS::Wippersnapper_FS() {
   // filesystem
 
   if (!initFilesystem()) {
-    //Serial.println("ERROR Initializing Filesystem");
+    // Serial.println("ERROR Initializing Filesystem");
     // setStatusLEDColor(RED);
     while (1)
       ;
   }
 
-
   // Initialize USB-MSD
   initUSBMSC();
 
-/*   // If we created a new filesystem, halt until user RESETs device.
-  if (_freshFS)
-    fsHalt(); */
-    digitalWrite(LED_BUILTIN, LOW);
+  /*   // If we created a new filesystem, halt until user RESETs device.
+    if (_freshFS)
+      fsHalt(); */
+  digitalWrite(LED_BUILTIN, LOW);
 }
 
 /************************************************************/
@@ -124,8 +122,6 @@ Wippersnapper_FS::~Wippersnapper_FS() {
   // io_username = NULL;
   // io_key = NULL;
 }
-
-
 
 /**************************************************************************/
 /*!
@@ -142,20 +138,18 @@ bool Wippersnapper_FS::initFilesystem() {
   bool fs_formatted = wipperFatFs.begin(&flash);
 
   // check if formatted
-  if ( !fs_formatted )
-  {
+  if (!fs_formatted) {
     fs_formatted = wipperFatFs.begin(&flash);
-    if (!fs_formatted)
-    {
-      /* Serial.println("Failed to init files system, flash may not be formatted");
-      Serial.println("Please format it as FAT12 with your PC or using Adafruit_SPIFlash's SdFat_format example:");
-      Serial.println("- https://github.com/adafruit/Adafruit_SPIFlash/tree/master/examples/SdFat_format");
+    if (!fs_formatted) {
+      /* Serial.println("Failed to init files system, flash may not be
+      formatted"); Serial.println("Please format it as FAT12 with your PC or
+      using Adafruit_SPIFlash's SdFat_format example:"); Serial.println("-
+      https://github.com/adafruit/Adafruit_SPIFlash/tree/master/examples/SdFat_format");
       Serial.println(); */
-      //fsHalt();
+      // fsHalt();
       return false;
     }
   }
-
 
   // Check if FS exists
   if (!wipperFatFs.begin(&flash)) {
@@ -174,15 +168,14 @@ bool Wippersnapper_FS::initFilesystem() {
     _freshFS = true;
   }
 
-   // If CircuitPython was previously installed - erase CPY FS
+  // If CircuitPython was previously installed - erase CPY FS
   eraseCPFS();
 
   // If WipperSnapper was previously installed - remove the
   // wippersnapper_boot_out.txt file
   eraseBootFile();
 
-  
-   // No file indexing on macOS
+  // No file indexing on macOS
   wipperFatFs.mkdir("/.fseventsd/");
   File32 writeFile = wipperFatFs.open("/.fseventsd/no_log", FILE_WRITE);
   if (!writeFile)
@@ -227,7 +220,7 @@ void Wippersnapper_FS::initUSBMSC() {
                                qspi_msc_flush_cb);
 
   // Set disk size, block size should be 512 regardless of spi flash page size
-  usb_msc.setCapacity(flash.size()/512, 512);
+  usb_msc.setCapacity(flash.size() / 512, 512);
 
   // MSC is ready for read/write
   usb_msc.setUnitReady(true);
@@ -340,8 +333,6 @@ void Wippersnapper_FS::createConfigFileSkel() {
       "* Please edit the secrets.json file. Then, reset your board.\n");
 }
 
-
-
 /**************************************************************************/
 /*!
     @brief    Parses a secrets.json file on the flash filesystem.
@@ -365,8 +356,8 @@ void Wippersnapper_FS::parseSecrets() {
 
     writeToBootOut("ERROR: deserializeJson() failed with code\n");
     writeToBootOut(err.c_str());
-    // buildScreenError("Error within secrets.json!", "Failed to deserialize, please check file's content again." );
-    // fsHalt();
+    // buildScreenError("Error within secrets.json!", "Failed to deserialize,
+    // please check file's content again." ); fsHalt();
   }
 
   // Get io username
@@ -375,8 +366,8 @@ void Wippersnapper_FS::parseSecrets() {
   if (io_username == nullptr) {
     Serial.println("ERROR: invalid io_username value in secrets.json!");
     writeToBootOut("ERROR: invalid io_username value in secrets.json!\n");
-    // buildScreenError("Error within secrets.json!", "Invalid (or missing) io_username value within secrets.json!" );
-    // fsHalt();
+    // buildScreenError("Error within secrets.json!", "Invalid (or missing)
+    // io_username value within secrets.json!" ); fsHalt();
   }
 
   // check if username is from templated json
@@ -440,7 +431,7 @@ void Wippersnapper_FS::parseSecrets() {
   // error check against default values [ArduinoJSON, 3.3.3]
   if (network_pass == nullptr) {
     Serial.println("ERROR: invalid network_type_wifi_password value in "
-                     "secrets.json!");
+                   "secrets.json!");
     writeToBootOut("ERROR: invalid network_type_wifi_password value in "
                    "secrets.json!\n");
     // fsHalt();
@@ -497,41 +488,41 @@ displayConfig Wippersnapper_FS::parseDisplayConfig() {
 
   File32 file = wipperFatFs.open("/display_config.json", FILE_READ);
   if (file) {
-      error = deserializeJson(doc, file);
-      file.close();
+    error = deserializeJson(doc, file);
+    file.close();
   } else {
-      Serial.println("ERROR could not find display_config.json!");
-      while (1)
-        yield();
+    Serial.println("ERROR could not find display_config.json!");
+    while (1)
+      yield();
   }
 
   // let's parse the deserialized array into a displayConfig struct!
   displayConfig displayFile;
   // generic fields
   strcpy(displayFile.driver, doc["driver"]);
-  displayFile.height = doc["width"];
   displayFile.height = doc["height"];
+  displayFile.width = doc["width"];
   displayFile.rotation = doc["rotation"];
 
   // display driver uses SPI, copy all the fields from the json array
-  if (!doc["isSPI"] == true) {
-    displayFile.isSPI = doc["isSPI"];
-    displayFile.pinCS = doc["pinCs"];
-    displayFile.pinDC = doc["pinDc"];
-    displayFile.pinMOSI = doc["pinMosi"];
-    displayFile.pinSCK = doc["pinSck"];
-    displayFile.pinRST = doc["pinRst"];
-  } else if (!doc["isI2C"] == true) {
+  if (doc["spi"] != nullptr) {
+    displayFile.isSPI = true;
+    displayFile.pinCS = doc["spi"]["pinCs"];
+    displayFile.pinDC = doc["spi"]["pinDc"];
+    displayFile.pinMOSI = doc["spi"]["pinMosi"];
+    displayFile.pinSCK = doc["spi"]["pinSck"];
+    displayFile.pinRST = doc["spi"]["pinRst"];
+  } else if (doc["i2c"] != nullptr) {
     Serial.println("I2C display drivers are not implemented yet!");
     // TODO: Halt?
   } else {
-    Serial.println("ERROR: Display device lacks a hardware interface, failing out...");
+    Serial.println(
+        "ERROR: Display device lacks a hardware interface, failing out...");
     // TODO: Halt?
   }
 
   return displayFile;
 }
-
 
 /**************************************************************************/
 /*!
