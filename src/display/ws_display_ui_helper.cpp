@@ -15,23 +15,17 @@
 
 #include "ws_display_ui_helper.h"
 
-uint8_t _tipNum = 0; ///< Current loading tip idx;
-
 /**************************************************************************/
 /*!
-    @brief    Changes the tip text every 2 seconds.
+    @brief    Changes a label every 2 seconds to a new, random, tip.
     @param    timer
               The lv_timer tied to this callback, timerLoadTips.
 */
 /**************************************************************************/
 void lv_timer_tips_cb(lv_timer_t *timer) {
   Serial.println("Timer tips cb called");
-  // reset to avoid overflow
-  if (_tipNum == sizeof(loading_tips) / sizeof(loading_tips[0]))
-    _tipNum = 0;
-
-  lv_label_set_text(lblTipText, loading_tips[_tipNum]);
-  _tipNum++;
+  long tipNum = random(0, sizeof(loading_tips) / sizeof(loading_tips[0]));
+  lv_label_set_text(lblTipText, loading_tips[tipNum]);
 }
 
 /**************************************************************************/
