@@ -75,10 +75,10 @@ void runNetFSM() {
       // secrets.json is within the scanned SSIDs
       if (!Wippersnapper_WiFi.check_valid_ssid()) {
         Serial.println("ERROR: Unable to find WiFi network...");
-/*         ui_helper.show_scr_error(
+        ui_helper.show_scr_error(
             "Network Error!",
             "Unable to find your WiFi network, [SSID]. Please ensure the "
-            "network is 2.4GHz and you are in range."); */
+            "network is 2.4GHz and you are in range.");
         halt_and_tick();
       }
       lv_task_handler();
